@@ -1,0 +1,6 @@
+SET FOREIGN_KEY_CHECKS=0;
+
+drop table i_user;
+
+SET FOREIGN_KEY_CHECKS=1;
+

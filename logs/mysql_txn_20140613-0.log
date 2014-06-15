@@ -1,0 +1,68 @@
+txn[1003], 15:17:40.005, insert into i_user (email, name, password) values (?,?,?) 
+txn[1003], 15:17:40.006, Binding Insert [i_user]  set[email=maxime@example.com, name=Maxime Jonas, password=notSecret, ] 
+txn[1003], 15:17:40.045, Inserted [user] [maxime@example.com] 
+txn[1004], 15:17:40.090, select t0.email c0, t0.name c1, t0.password c2  from i_user t0 where t0.email = ?   
+txn[1004], 15:17:40.094, FindBean type[user] origin[C5Kz_6.DeELKQ.BvQztc] exeMicros[4360] rows[1] bind[maxime@example.com] 
+txn[1003], 15:18:22.753, insert into i_user (email, name, password) values (?,?,?) 
+txn[1003], 15:18:22.754, Binding Insert [i_user]  set[email=maxime@example.com, name=Maxime Jonas, password=notSecret, ] 
+txn[1003], 15:18:22.756, Inserted [user] [maxime@example.com] 
+txn[1004], 15:18:22.803, select t0.email c0, t0.name c1, t0.password c2  from i_user t0 where t0.email = ?   
+txn[1004], 15:18:22.808, FindBean type[user] origin[C5Kz_6.DeELKQ.BvQztc] exeMicros[4263] rows[1] bind[maxime@example.com] 
+txn[1005], 15:18:22.808, insert into i_user (email, name, password) values (?,?,?) 
+txn[1005], 15:18:22.808, Binding Insert [i_user]  set[email=hobo@example.com, name=Hobo Blues, password=secret, ] 
+txn[1005], 15:18:22.810, Inserted [user] [hobo@example.com] 
+txn[1003], 15:19:12.783, insert into i_user (email, name, password) values (?,?,?) 
+txn[1003], 15:19:12.784, Binding Insert [i_user]  set[email=maxime@example.com, name=Maxime Jonas, password=notSecret, ] 
+txn[1003], 15:19:12.785, Inserted [user] [maxime@example.com] 
+txn[1004], 15:19:12.826, select t0.email c0, t0.name c1, t0.password c2  from i_user t0 where t0.email = ?   
+txn[1004], 15:19:12.831, FindBean type[user] origin[C5Kz_6.DeELKQ.BvQztc] exeMicros[4271] rows[1] bind[maxime@example.com] 
+txn[1005], 15:19:12.831, insert into i_user (email, name, password) values (?,?,?) 
+txn[1005], 15:19:12.831, Binding Insert [i_user]  set[email=hobo@example.com, name=Hobo Blues, password=secret, ] 
+txn[1005], 15:19:12.833, Inserted [user] [hobo@example.com] 
+txn[1003], 15:19:49.792, insert into i_user (email, name, password) values (?,?,?) 
+txn[1003], 15:19:49.793, Binding Insert [i_user]  set[email=maxime@example.com, name=Maxime Jonas, password=notSecret, ] 
+txn[1003], 15:19:49.794, Inserted [user] [maxime@example.com] 
+txn[1004], 15:19:49.826, select t0.email c0, t0.name c1, t0.password c2  from i_user t0 where t0.email = ?   
+txn[1004], 15:19:49.838, FindBean type[user] origin[C5Kz_6.DeELKQ.BvQztc] exeMicros[11942] rows[1] bind[maxime@example.com] 
+txn[1003], 15:20:08.318, insert into i_user (email, name, password) values (?,?,?) 
+txn[1003], 15:20:08.319, Binding Insert [i_user]  set[email=maxime@example.com, name=Maxime Jonas, password=notSecret, ] 
+txn[1003], 15:20:08.332, Inserted [user] [maxime@example.com] 
+txn[1004], 15:20:08.365, select t0.email c0, t0.name c1, t0.password c2  from i_user t0 where t0.email = ?   
+txn[1004], 15:20:08.376, FindBean type[user] origin[C5Kz_6.DeELKQ.BvQztc] exeMicros[11581] rows[1] bind[maxime@example.com] 
+txn[1003], 15:24:25.871, insert into i_user (email, name, password) values (?,?,?) 
+txn[1003], 15:24:25.872, Binding Insert [i_user]  set[email=maxime@example.com, name=Maxime Jonas, password=notSecret, ] 
+txn[1003], 15:24:25.873, Inserted [user] [maxime@example.com] 
+txn[1004], 15:24:25.905, select t0.email c0, t0.name c1, t0.password c2  from i_user t0 where t0.email = ?   
+txn[1004], 15:24:25.918, FindBean type[user] origin[C5Kz_6.DeELKQ.BvQztc] exeMicros[12331] rows[1] bind[maxime@example.com] 
+txn[1005], 15:24:25.918, insert into i_user (email, name, password) values (?,?,?) 
+txn[1005], 15:24:25.919, Binding Insert [i_user]  set[email=hobo@example.com, name=Hobo Blues, password=secret, ] 
+txn[1005], 15:24:25.919, Inserted [user] [hobo@example.com] 
+txn[1003], 15:25:02.486, insert into i_user (email, name, password) values (?,?,?) 
+txn[1003], 15:25:02.487, Binding Insert [i_user]  set[email=maxime@example.com, name=Maxime Jonas, password=notSecret, ] 
+txn[1003], 15:25:02.489, Inserted [user] [maxime@example.com] 
+txn[1004], 15:25:02.521, select t0.email c0, t0.name c1, t0.password c2  from i_user t0 where t0.email = ?   
+txn[1004], 15:25:02.533, FindBean type[user] origin[C5Kz_6.DeELKQ.BvQztc] exeMicros[11613] rows[1] bind[maxime@example.com] 
+txn[1005], 15:25:02.533, insert into i_user (email, name, password) values (?,?,?) 
+txn[1005], 15:25:02.533, Binding Insert [i_user]  set[email=hobo@example.com, name=Hobo Blues, password=secret, ] 
+txn[1005], 15:25:02.535, Inserted [user] [hobo@example.com] 
+txn[1003], 15:50:28.222, insert into i_user (email, name, password) values (?,?,?) 
+txn[1003], 15:50:28.223, Binding Insert [i_user]  set[email=maxime@example.com, name=Maxime Jonas, password=notSecret, ] 
+txn[1003], 15:50:28.224, Inserted [user] [maxime@example.com] 
+txn[1004], 15:50:28.257, select t0.email c0, t0.name c1, t0.password c2  from i_user t0 where t0.email = ?   
+txn[1004], 15:50:28.262, FindBean type[user] origin[C5Kz_6.DeELKQ.BvQztc] exeMicros[4543] rows[1] bind[maxime@example.com] 
+txn[1005], 15:50:28.262, insert into i_user (email, name, password) values (?,?,?) 
+txn[1005], 15:50:28.262, Binding Insert [i_user]  set[email=hobo@example.com, name=Hobo Blues, password=secret, ] 
+txn[1005], 15:50:28.263, Inserted [user] [hobo@example.com] 
+txn[1006], 15:50:28.268, insert into i_user (email, name, password) values (?,?,?) 
+txn[1006], 15:50:28.268, Binding Insert [i_user]  set[email=mkyong..2002@gmail.com, name=invalidMail, password=secret, ] 
+txn[1006], 15:50:28.269, Inserted [user] [mkyong..2002@gmail.com] 
+txn[1007], 15:50:28.271, select t0.email c0, t0.name c1, t0.password c2  from i_user t0 where t0.email = ?   
+txn[1007], 15:50:28.271, FindBean type[user] origin[C5K0AE.DeELKQ.BvQztc] exeMicros[380] rows[0] bind[invalidMail] 
+txn[1003], 15:54:34.952, insert into i_user (email, name, password) values (?,?,?) 
+txn[1003], 15:54:34.953, Binding Insert [i_user]  set[email=maxime@example.com, name=Maxime Jonas, password=notSecret, ] 
+txn[1003], 15:54:34.967, Inserted [user] [maxime@example.com] 
+txn[1004], 15:54:34.999, select t0.email c0, t0.name c1, t0.password c2  from i_user t0 where t0.email = ?   
+txn[1004], 15:54:35.011, FindBean type[user] origin[C5Kz_6.DeELKQ.BvQztc] exeMicros[11956] rows[1] bind[maxime@example.com] 
+txn[1005], 15:54:35.012, insert into i_user (email, name, password) values (?,?,?) 
+txn[1005], 15:54:35.012, Binding Insert [i_user]  set[email=hobo@example.com, name=Hobo Blues, password=secret, ] 
+txn[1005], 15:54:35.013, Inserted [user] [hobo@example.com] 
