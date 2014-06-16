@@ -44,7 +44,7 @@ public class InvoiceMain extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = jTable1 = new JTable(){
+        jTable1 = new JTable(){
             public boolean isCellEditable(int rowIndex, int colIndex){
                 return false;
             }

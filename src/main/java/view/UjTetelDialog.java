@@ -8,7 +8,7 @@ package view;
 
 import javax.swing.*;
 
-import static Invoice.InvoiceInterface.kijelzoMeret;
+import static view.InvoiceInterface.kijelzoMeret;
 
 /**
  *
