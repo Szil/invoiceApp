@@ -1,3 +1,4 @@
+// 2014-06-14
 package view;
 
 import javax.swing.*;
@@ -7,9 +8,9 @@ import java.awt.event.ActionListener;
 /*
  * @author Adam
  */
-public class SzamlaKeszitesDialog extends javax.swing.JDialog implements ActionListener, InvoiceInterface {
+public class SztornozasDialog extends javax.swing.JDialog implements ActionListener, InvoiceInterface {
 
-    SzamlaKeszitesDialog(java.awt.Frame parent, boolean modal) {
+    SztornozasDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -108,13 +109,13 @@ public class SzamlaKeszitesDialog extends javax.swing.JDialog implements ActionL
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Invoice 1.5  -  Számlakészítés");
+        setTitle("Invoice 1.5  -  Számlakészítés  -  Sztornózás");
         setBackground(new java.awt.Color(204, 204, 204));
         setBounds((int) (((kijelzoMeret.width / 2) - 512)),
             (int) ((kijelzoMeret.height / 2) - 375), 1024, 720);
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         setForeground(new java.awt.Color(102, 102, 102));
-        setIconImage(new helper().createImageIcon(defIconPath).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/Invoice/invoice_ico.png")).getImage());
         setMaximumSize(new java.awt.Dimension(1024, 720));
         setMinimumSize(new java.awt.Dimension(1024, 720));
         setModal(true);
@@ -359,7 +360,7 @@ public class SzamlaKeszitesDialog extends javax.swing.JDialog implements ActionL
         jComboBox3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jComboBox3.setForeground(new java.awt.Color(0, 0, 204));
         jComboBox3.setMaximumRowCount(2);
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Számla", "Sztornó - számla" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sztornó - számla" }));
         jComboBox3.setToolTipText("A számla típusának kiválasztása");
         jComboBox3.setPreferredSize(new java.awt.Dimension(144, 21));
         jComboBox3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -483,7 +484,7 @@ public class SzamlaKeszitesDialog extends javax.swing.JDialog implements ActionL
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 0, 204));
-        jLabel10.setText("Számla");
+        jLabel10.setText("Sztornó - számla");
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel25.setText("A számla x példányban készült. Ez a számla a(z): 2/2, eredeti.");
@@ -593,7 +594,7 @@ public class SzamlaKeszitesDialog extends javax.swing.JDialog implements ActionL
         jButton4.setBackground(new java.awt.Color(204, 255, 204));
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton4.setForeground(new java.awt.Color(0, 0, 204));
-        jButton4.setText("Új tétel");
+        jButton4.setText("Új tételek");
         jButton4.setPreferredSize(new java.awt.Dimension(73, 25));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -941,9 +942,10 @@ public class SzamlaKeszitesDialog extends javax.swing.JDialog implements ActionL
     }//GEN-LAST:event_jComboBox3MouseClicked
 
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
-        if (jComboBox3.getSelectedIndex() == 0) {
-            jLabel10.setText("Számla");
-        } else if (jComboBox3.getSelectedIndex() == 1) {
+//        if (jComboBox3.getSelectedIndex() == 0) {
+//            jLabel10.setText("Számla");
+//        } 
+          if (jComboBox3.getSelectedIndex() == 0) {
             jLabel10.setText("Sztornó - számla");
         } else {
             //

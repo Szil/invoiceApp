@@ -374,7 +374,7 @@ public class InvoiceMain extends javax.swing.JFrame {
         });
 
         jButton5.setBackground(new java.awt.Color(204, 255, 204));
-        jButton5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton5.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
         jButton5.setForeground(new java.awt.Color(0, 0, 204));
         jButton5.setText("Új kiállító felvétele");
         jButton5.setMaximumSize(new java.awt.Dimension(300, 23));
@@ -541,7 +541,7 @@ public class InvoiceMain extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         SzamlaKeszitesDialog szamlaDialog = new SzamlaKeszitesDialog(mainFrame, rootPaneCheckingEnabled);
-                szamlaDialog.setVisible(true);
+        szamlaDialog.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -561,19 +561,22 @@ public class InvoiceMain extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        //Új kiállító felvétele
+        NewKiallDialog newKiallDialog = new NewKiallDialog(mainFrame, rootPaneCheckingEnabled);
+                newKiallDialog.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-         int selectedOption = JOptionPane.showConfirmDialog(null, "Biztos hogy ki akarsz lépni?", "Kilépés", JOptionPane.YES_NO_OPTION);
-                if (selectedOption == JOptionPane.YES_OPTION) {
-                    System.exit(0);
-                }
-                
+        int selectedOption = JOptionPane.showConfirmDialog(null, "Biztos hogy ki akarsz lépni?", "Kilépés", JOptionPane.YES_NO_OPTION);
+        if (selectedOption == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        SztornozasDialog sztornoDialog = new SztornozasDialog(mainFrame, rootPaneCheckingEnabled);
+        sztornoDialog.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
