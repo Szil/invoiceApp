@@ -4,9 +4,6 @@ package model;
  * Created by Szil on 2014.05.10..
  */
 import com.avaje.ebean.annotation.EnumMapping;
-import com.avaje.ebean.validation.Email;
-import com.avaje.ebean.validation.Length;
-import com.avaje.ebean.validation.NotNull;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,24 +14,21 @@ import java.io.Serializable;
 @Table(name = "i_user")
 public class user implements Serializable {
 
+    @Id
+    String email;
+
+    String name;
+
+    String password;
+
     @EnumMapping(nameValuePairs = "ADMINISZTRATOR=A,KONYVELO=K,SZAMLAZO=S")
-    public enum Szint {
+    protected enum szKor {
         ADMINISZTRATOR,
         KONYVELO,
         SZAMLAZO,
     }
 
-    Szint role;
-
-    @Id
-    @Email
-    private String email;
-
-    @Length(max = 40)
-    private String name;
-
-    @NotNull
-    private String password;
+    szKor u_role;
 
     public String getEmail() {
         return email;
@@ -60,17 +54,21 @@ public class user implements Serializable {
         this.password = password;
     }
 
-    // -- Contructor
-    public user(String email, String name, String password) {
-            this.name = name;
-            this.email = email;
-            this.password = password;
+    public szKor getU_role() {
+        return u_role;
     }
 
-    public user(){}
+    public void setU_role(szKor u_role) {
+        this.u_role = u_role;
+    }
 
     @Override
     public String toString() {
-        return "User(" + email + ")";
+        return "user{" +
+                "u_role=" + u_role +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
