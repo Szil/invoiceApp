@@ -6,15 +6,10 @@
 
 package view;
 
-import controller.authCtrl;
-import controller.session;
-
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
-import javax.swing.event.MouseInputAdapter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 
 import static view.InvoiceInterface.*;
 
@@ -25,7 +20,7 @@ import static view.InvoiceInterface.*;
  *
  * @author Adrenalin
  */
-public class InvoiceMain extends JFrame {
+public class InvoiceMain extends JFrame implements Runnable {
 
     /**
      * Creates new form InvoiceMain
@@ -152,11 +147,7 @@ public class InvoiceMain extends JFrame {
         btnUjSzla.setMaximumSize(new java.awt.Dimension(120, 44));
         btnUjSzla.setMinimumSize(new java.awt.Dimension(120, 44));
         btnUjSzla.setPreferredSize(new java.awt.Dimension(120, 44));
-        btnUjSzla.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
+        btnUjSzla.setActionCommand("btnUjSzla");
 
         btnSztorno.setBackground(new java.awt.Color(204, 255, 204));
         btnSztorno.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -195,6 +186,7 @@ public class InvoiceMain extends JFrame {
         btnFrissit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnFrissit.setForeground(new java.awt.Color(0, 153, 0));
         btnFrissit.setText("Frissítés");
+        btnFrissit.setActionCommand("btnFrissit");
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -243,16 +235,6 @@ public class InvoiceMain extends JFrame {
         btnBejelentkez.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnBejelentkez.setForeground(new java.awt.Color(0, 0, 204));
         btnBejelentkez.setText("Bejelentkezés");
-        btnBejelentkez.addMouseListener(new MouseInputAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                authCtrl auth = new authCtrl();
-                session currentSess = auth.loginUser(txtFelhaszNev.getText(), txtPass.getText());
-                if(currentSess != null) {
-                    txtLoginInfo.setText("Belépve, mint: " + currentSess.getCurrentUser().getName());
-                }
-            }
-        });
 
         btnKijelentkez.setBackground(new java.awt.Color(204, 255, 204));
         btnKijelentkez.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -500,6 +482,7 @@ public class InvoiceMain extends JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //btnszlaOLD listener
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         SzamlaKeszitesDialog szamlaDialog = new SzamlaKeszitesDialog(mainFrame, rootPaneCheckingEnabled);
         szamlaDialog.setVisible(true);
@@ -540,39 +523,64 @@ public class InvoiceMain extends JFrame {
         sztornoDialog.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(InvoiceMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(InvoiceMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(InvoiceMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(InvoiceMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+    @Override
+    public void run() {
+        //initComponents();
+
+    }
+
+    public void showWindow() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                new InvoiceMain().setVisible(true);
+                setVisible(true);
             }
         });
+    }
+
+    public void addLoginListener(ActionListener lll) {
+        btnBejelentkez.addActionListener(lll);
+    }
+
+    public void addBtnListener(ActionListener btnListener) {
+        btnUjSzla.addActionListener(btnListener);
+        btnFrissit.addActionListener(btnListener);
+    }
+
+    public void showWarningDialog(String message) {
+        mainInfoDialog.showMessageDialog(null, message, "Invoice", JOptionPane.WARNING_MESSAGE);
+    }
+
+    public void showInfoDialog(String message) {
+        mainInfoDialog.showMessageDialog(null, message, "Invoice", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public String getLoginName() {
+        return txtFelhaszNev.getText();
+    }
+
+    public String getLoginPass() {
+        return txtPass.getText();
+    }
+
+    public void applyRole(String role) {
+        switch (role) {
+            case "KONYVELO":
+                btnUjKiallito.setEnabled(false);
+                btnBejelentkez.setEnabled(false);
+                btnUjSzla.setEnabled(false);
+                break;
+            case "SZAMLAZO":
+                break;
+            case "ADMINISZTRATOR":
+                showInfoDialog("Felhasználó kezelésre a Webes felületen van lehetőség.");
+                break;
+        }
+    }
+
+    public void setTxtLoginInfo(String info) {
+        txtLoginInfo.setText(info);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -612,4 +620,5 @@ public class InvoiceMain extends JFrame {
     private javax.swing.JTextField txtFelhaszNev;
     private javax.swing.JTextField txtLoginInfo;
     // End of variables declaration//GEN-END:variables
+    private JOptionPane mainInfoDialog;
 }
