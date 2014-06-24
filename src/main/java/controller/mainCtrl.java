@@ -3,6 +3,9 @@ package controller;
 import com.avaje.ebean.EbeanServer;
 import model.user;
 import view.InvoiceMain;
+import view.NewKiallDialog;
+import view.SzamlaKeszitesDialog;
+import view.SztornozasDialog;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +17,9 @@ public class MainCtrl implements Runnable {
 
     protected EbeanServer defServer;
     protected InvoiceMain mWindow;
+    protected SzamlaKeszitesDialog szamlaDialog;
+    protected NewKiallDialog newKiallDialog;
+    protected SztornozasDialog sztornoDialog;
     protected user currentUser;
 
     public MainCtrl(EbeanServer defServer, InvoiceMain view) {
@@ -59,10 +65,26 @@ public class MainCtrl implements Runnable {
 
             switch (source) {
                 case "btnUjSzla":
-                    mWindow.showWarningDialog("Új számla");
+                    szamlaDialog = new SzamlaKeszitesDialog(mWindow, mWindow.isRootCheckingEnabled());
+                    szamlaDialog.setVisible(true);
                     break;
                 case "btnFrissit":
                     mWindow.showWarningDialog("Frissit");
+                    break;
+                case "btnUjKiallito":
+                    newKiallDialog = new NewKiallDialog(mWindow, mWindow.isRootCheckingEnabled());
+                    newKiallDialog.setVisible(true);
+                    break;
+                case "miKilepes":
+                    mWindow.showKilepesPromt();
+                    break;
+                case "btnSztorno":
+                    sztornoDialog = new SztornozasDialog(mWindow, mWindow.isRootCheckingEnabled());
+                    sztornoDialog.setVisible(true);
+                    break;
+                case "miUjSzamla":
+                    szamlaDialog = new SzamlaKeszitesDialog(mWindow, mWindow.isRootCheckingEnabled());
+                    szamlaDialog.setVisible(true);
                     break;
             }
         }

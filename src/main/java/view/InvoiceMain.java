@@ -8,7 +8,6 @@ package view;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static view.InvoiceInterface.*;
@@ -26,7 +25,7 @@ public class InvoiceMain extends JFrame implements Runnable {
      * Creates new form InvoiceMain
      */
     public InvoiceMain() {
-        initComponents();
+        run();
     }
 
     /**
@@ -70,21 +69,14 @@ public class InvoiceMain extends JFrame implements Runnable {
         lbSzlaRend = new javax.swing.JLabel();
         lbSzures = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 =  //Fájl
-        new javax.swing.JMenu();
-        JMenuItem ujSzamla = new JMenuItem("Új számla");
-        jMenu1.add(ujSzamla);
+        menuFalj = new javax.swing.JMenu(); //Fájl
+        miUjSzamla = new JMenuItem("Új számla");
+        menuFalj.add(miUjSzamla);
         //new javax.swing.JToolBar.Separator()
 
-        ujSzamla.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SzamlaKeszitesDialog szamlaDialog = new SzamlaKeszitesDialog(mainFrame, rootPaneCheckingEnabled);
-                szamlaDialog.setVisible(true);
-            }
-        });
+        miUjSzamla.setActionCommand("miUjSzamla");
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        miKilepes = new javax.swing.JMenuItem();
         jMenu2 = //Szerkesztés
         new javax.swing.JMenu();
         JMenuItem szerk1 = new JMenuItem("Szerkesztés_1");
@@ -153,11 +145,7 @@ public class InvoiceMain extends JFrame implements Runnable {
         btnSztorno.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnSztorno.setForeground(new java.awt.Color(0, 0, 204));
         btnSztorno.setText("Sztornózás");
-        btnSztorno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
+        btnSztorno.setActionCommand("btnSztorno");
 
         tbSzla.setAutoCreateRowSorter(true);
         tbSzla.setBackground(new java.awt.Color(204, 255, 255));
@@ -310,11 +298,7 @@ public class InvoiceMain extends JFrame implements Runnable {
         cbbSzKor.setMaximumSize(new java.awt.Dimension(280, 30));
         cbbSzKor.setMinimumSize(new java.awt.Dimension(280, 30));
         cbbSzKor.setPreferredSize(new java.awt.Dimension(280, 30));
-        cbbSzKor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
+        cbbSzKor.setActionCommand("cbbSzKor");
 
         btnUjKiallito.setBackground(new java.awt.Color(204, 255, 204));
         btnUjKiallito.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
@@ -323,11 +307,7 @@ public class InvoiceMain extends JFrame implements Runnable {
         btnUjKiallito.setMaximumSize(new java.awt.Dimension(300, 23));
         btnUjKiallito.setMinimumSize(new java.awt.Dimension(300, 23));
         btnUjKiallito.setPreferredSize(new java.awt.Dimension(300, 23));
-        btnUjKiallito.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
+        btnUjKiallito.setActionCommand("btnUjKiallito");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -366,11 +346,7 @@ public class InvoiceMain extends JFrame implements Runnable {
         ccbDatumRend.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         ccbDatumRend.setForeground(new java.awt.Color(0, 0, 204));
         ccbDatumRend.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Dátum szerint  csökkenő", "Dátum szerint növekvő"}));
-        ccbDatumRend.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox4ActionPerformed(evt);
-            }
-        });
+        ccbDatumRend.setActionCommand("ccbDatumRend");
 
         lbSzlaRend.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbSzlaRend.setText("Számlák rendezése:");
@@ -378,18 +354,14 @@ public class InvoiceMain extends JFrame implements Runnable {
         lbSzures.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbSzures.setText("Szűrés:");
 
-        jMenu1.setText("Fájl");
-        jMenu1.add(jSeparator1);
+        menuFalj.setText("Fájl");
+        menuFalj.add(jSeparator1);
 
-        jMenuItem3.setText("Kilépés");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem3);
+        miKilepes.setText("Kilépés");
+        miKilepes.setActionCommand("miKilepes");
+        menuFalj.add(miKilepes);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(menuFalj);
 
         jMenu2.setText("Szerkesztés");
         jMenuBar1.add(jMenu2);
@@ -482,52 +454,9 @@ public class InvoiceMain extends JFrame implements Runnable {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    //btnszlaOLD listener
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        SzamlaKeszitesDialog szamlaDialog = new SzamlaKeszitesDialog(mainFrame, rootPaneCheckingEnabled);
-        szamlaDialog.setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-//        if (cbbSzKor.getSelectedIndex() == 0) {
-//            lbSzures.setText("Hozzáférési szint kiválasztása...");
-//        } else if (cbbSzKor.getSelectedIndex() == 1) {
-//            lbSzures.setText("Könyvelő");
-//        } else if (cbbSzKor.getSelectedIndex() == 2) {
-//            lbSzures.setText("Számlázó");
-//        } else {
-//            //
-//        }
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
-    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox4ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        //Új kiállító felvétele
-        NewKiallDialog newKiallDialog = new NewKiallDialog(mainFrame, rootPaneCheckingEnabled);
-                newKiallDialog.setVisible(true);
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        int selectedOption = JOptionPane.showConfirmDialog(null, "Biztos hogy ki akarsz lépni?", "Kilépés", JOptionPane.YES_NO_OPTION);
-        if (selectedOption == JOptionPane.YES_OPTION) {
-            System.exit(0);
-        }
-
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        SztornozasDialog sztornoDialog = new SztornozasDialog(mainFrame, rootPaneCheckingEnabled);
-        sztornoDialog.setVisible(true);
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-
     @Override
     public void run() {
-        //initComponents();
-
+        initComponents();
     }
 
     public void showWindow() {
@@ -546,6 +475,16 @@ public class InvoiceMain extends JFrame implements Runnable {
     public void addBtnListener(ActionListener btnListener) {
         btnUjSzla.addActionListener(btnListener);
         btnFrissit.addActionListener(btnListener);
+        btnUjKiallito.addActionListener(btnListener);
+        miKilepes.addActionListener(btnListener);
+        miUjSzamla.addActionListener(btnListener);
+    }
+
+    public void showKilepesPromt() {
+        int selectedOption = JOptionPane.showConfirmDialog(null, "Biztos hogy ki akarsz lépni?", "Kilépés", JOptionPane.YES_NO_OPTION);
+        if (selectedOption == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
     }
 
     public void showWarningDialog(String message) {
@@ -579,6 +518,10 @@ public class InvoiceMain extends JFrame implements Runnable {
         }
     }
 
+    public boolean isRootCheckingEnabled() {
+        return this.rootPaneCheckingEnabled;
+    }
+
     public void setTxtLoginInfo(String info) {
         txtLoginInfo.setText(info);
     }
@@ -600,14 +543,14 @@ public class InvoiceMain extends JFrame implements Runnable {
     private javax.swing.JLabel lbSzures;
     private javax.swing.JLabel lbSzlaRend;
     private javax.swing.JLabel lbInfoBar;
-    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu menuFalj;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem miKilepes;
     private javax.swing.JPanel pnlInfoBar;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel pnlLogin;
@@ -621,4 +564,5 @@ public class InvoiceMain extends JFrame implements Runnable {
     private javax.swing.JTextField txtLoginInfo;
     // End of variables declaration//GEN-END:variables
     private JOptionPane mainInfoDialog;
+    private JMenuItem miUjSzamla;
 }

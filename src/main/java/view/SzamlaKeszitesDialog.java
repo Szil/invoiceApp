@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
  */
 public class SzamlaKeszitesDialog extends javax.swing.JDialog implements ActionListener, InvoiceInterface {
 
-    SzamlaKeszitesDialog(java.awt.Frame parent, boolean modal) {
+    public SzamlaKeszitesDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }

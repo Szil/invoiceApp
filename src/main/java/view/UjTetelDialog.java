@@ -6,8 +6,7 @@
 
 package view;
 
-import javax.swing.*;
-
+import static view.InvoiceInterface.defIconPath;
 import static view.InvoiceInterface.kijelzoMeret;
 
 /**
@@ -53,7 +52,7 @@ public class UjTetelDialog extends javax.swing.JDialog {
         setTitle("Invoice 1.5  -  Új tételek felvétele");
         setBounds((int) (((kijelzoMeret.width / 2) - 505)),
             (int) ((kijelzoMeret.height / 2) - 200), 1000, 326);
-        setIconImage(new ImageIcon(getClass().getResource("/Invoice/invoice_ico.png")).getImage());
+        setIconImage(new helper().createImageIcon(defIconPath).getImage());
         setMaximumSize(new java.awt.Dimension(1000, 326));
         setMinimumSize(new java.awt.Dimension(1000, 326));
         setResizable(false);

@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
  */
 public class SztornozasDialog extends javax.swing.JDialog implements ActionListener, InvoiceInterface {
 
-    SztornozasDialog(java.awt.Frame parent, boolean modal) {
+    public SztornozasDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -115,7 +115,7 @@ public class SztornozasDialog extends javax.swing.JDialog implements ActionListe
             (int) ((kijelzoMeret.height / 2) - 375), 1024, 720);
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         setForeground(new java.awt.Color(102, 102, 102));
-        setIconImage(new ImageIcon(getClass().getResource("/Invoice/invoice_ico.png")).getImage());
+        setIconImage(new helper().createImageIcon(defIconPath).getImage());
         setMaximumSize(new java.awt.Dimension(1024, 720));
         setMinimumSize(new java.awt.Dimension(1024, 720));
         setModal(true);

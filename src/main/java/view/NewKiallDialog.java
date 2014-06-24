@@ -6,8 +6,7 @@
 
 package view;
 
-import javax.swing.*;
-
+import static view.InvoiceInterface.defIconPath;
 import static view.InvoiceInterface.kijelzoMeret;
 
 /**
@@ -53,7 +52,7 @@ public class NewKiallDialog extends javax.swing.JDialog {
         setTitle("Invoice 1.5  -  Új eladó felvétele");
         setBounds((int) (((kijelzoMeret.width / 2) - 270)),
             (int) ((kijelzoMeret.height / 2) - 200), 540, 260);
-        setIconImage(new ImageIcon(getClass().getResource("/Invoice/invoice_ico.png")).getImage());
+        setIconImage(new helper().createImageIcon(defIconPath).getImage());
         setMaximumSize(new java.awt.Dimension(540, 260));
         setMinimumSize(new java.awt.Dimension(540, 260));
         setPreferredSize(new java.awt.Dimension(540, 260));
