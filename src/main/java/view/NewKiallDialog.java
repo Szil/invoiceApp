@@ -6,21 +6,26 @@
 
 package view;
 
+import model.Organisation;
+import validation.MyTextField;
+
+import javax.swing.*;
+import java.awt.event.ActionListener;
+
 import static view.InvoiceInterface.defIconPath;
 import static view.InvoiceInterface.kijelzoMeret;
 
 /**
- *
  * @author Adrenalin
  */
-public class NewKiallDialog extends javax.swing.JDialog {
+public class NewKiallDialog extends javax.swing.JDialog implements Runnable {
 
     /**
      * Creates new form NewKiallDialog
      */
     public NewKiallDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        initComponents();
+        run();
     }
 
     /**
@@ -33,25 +38,25 @@ public class NewKiallDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel9 = new javax.swing.JPanel();
-        jTextField13 = new javax.swing.JTextField();
-        jTextField14 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField20 = new javax.swing.JTextField();
-        jTextField28 = new javax.swing.JTextField();
+        txtPhone = new MyTextField();
+        txtTaxId = new MyTextField();
+        txtBankAcc = new MyTextField();
+        txtAddress = new MyTextField();
+        txtName = new MyTextField();
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField15 = new javax.swing.JTextField();
-        jButton8 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        txtEmail = new MyTextField();
+        btnMentes = new javax.swing.JButton();
+        btnMegse = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Invoice 1.5  -  Új eladó felvétele");
+        setTitle("Invoice 1.5  -  Új kiállitó felvétele");
         setBounds((int) (((kijelzoMeret.width / 2) - 270)),
-            (int) ((kijelzoMeret.height / 2) - 200), 540, 260);
+                (int) ((kijelzoMeret.height / 2) - 200), 540, 260);
         setIconImage(new helper().createImageIcon(defIconPath).getImage());
         setMaximumSize(new java.awt.Dimension(540, 260));
         setMinimumSize(new java.awt.Dimension(540, 260));
@@ -61,20 +66,20 @@ public class NewKiallDialog extends javax.swing.JDialog {
         jPanel9.setBackground(new java.awt.Color(204, 204, 204));
         jPanel9.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jTextField13.setBackground(new java.awt.Color(204, 255, 255));
-        jTextField13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtPhone.setBackground(new java.awt.Color(204, 255, 255));
+        txtPhone.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jTextField14.setBackground(new java.awt.Color(204, 255, 255));
-        jTextField14.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtTaxId.setBackground(new java.awt.Color(204, 255, 255));
+        txtTaxId.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jTextField8.setBackground(new java.awt.Color(204, 255, 255));
-        jTextField8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtBankAcc.setBackground(new java.awt.Color(204, 255, 255));
+        txtBankAcc.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jTextField20.setBackground(new java.awt.Color(204, 255, 255));
-        jTextField20.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtAddress.setBackground(new java.awt.Color(204, 255, 255));
+        txtAddress.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jTextField28.setBackground(new java.awt.Color(204, 255, 255));
-        jTextField28.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtName.setBackground(new java.awt.Color(204, 255, 255));
+        txtName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         jLabel27.setText("Eladó");
@@ -94,163 +99,153 @@ public class NewKiallDialog extends javax.swing.JDialog {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel3.setText("Név:");
 
-        jTextField15.setBackground(new java.awt.Color(204, 255, 255));
-        jTextField15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtEmail.setBackground(new java.awt.Color(204, 255, 255));
+        txtEmail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jButton8.setBackground(new java.awt.Color(204, 255, 204));
-        jButton8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(0, 153, 0));
-        jButton8.setText("Mentés");
-        jButton8.setMaximumSize(new java.awt.Dimension(85, 30));
-        jButton8.setMinimumSize(new java.awt.Dimension(85, 30));
-        jButton8.setPreferredSize(new java.awt.Dimension(85, 30));
+        btnMentes.setBackground(new java.awt.Color(204, 255, 204));
+        btnMentes.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnMentes.setForeground(new java.awt.Color(0, 153, 0));
+        btnMentes.setText("Mentés");
+        btnMentes.setMaximumSize(new java.awt.Dimension(85, 30));
+        btnMentes.setMinimumSize(new java.awt.Dimension(85, 30));
+        btnMentes.setPreferredSize(new java.awt.Dimension(85, 30));
+        btnMentes.setActionCommand("btnMentes");
 
-        jButton1.setBackground(new java.awt.Color(204, 255, 204));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 0, 204));
-        jButton1.setText("Mégse");
-        jButton1.setMaximumSize(new java.awt.Dimension(85, 30));
-        jButton1.setMinimumSize(new java.awt.Dimension(85, 30));
-        jButton1.setPreferredSize(new java.awt.Dimension(85, 30));
+        btnMegse.setBackground(new java.awt.Color(204, 255, 204));
+        btnMegse.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnMegse.setForeground(new java.awt.Color(0, 0, 204));
+        btnMegse.setText("Mégse");
+        btnMegse.setMaximumSize(new java.awt.Dimension(85, 30));
+        btnMegse.setMinimumSize(new java.awt.Dimension(85, 30));
+        btnMegse.setPreferredSize(new java.awt.Dimension(85, 30));
+        btnMegse.setActionCommand("btnMegse");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel31)
-                                    .addComponent(jLabel30))
-                                .addComponent(jLabel29, javax.swing.GroupLayout.Alignment.TRAILING))
-                            .addComponent(jLabel28)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField28)
-                            .addComponent(jTextField20)
-                            .addComponent(jTextField8)
-                            .addComponent(jTextField14)
-                            .addGroup(jPanel9Layout.createSequentialGroup()
-                                .addComponent(jLabel27)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel9Layout.createSequentialGroup()
-                                .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField15, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel9Layout.createSequentialGroup()
+                                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                        .addComponent(jLabel31)
+                                                                        .addComponent(jLabel30))
+                                                                .addComponent(jLabel29, javax.swing.GroupLayout.Alignment.TRAILING))
+                                                        .addComponent(jLabel28)
+                                                        .addComponent(jLabel3))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(txtName)
+                                                        .addComponent(txtAddress)
+                                                        .addComponent(txtBankAcc)
+                                                        .addComponent(txtTaxId)
+                                                        .addGroup(jPanel9Layout.createSequentialGroup()
+                                                                .addComponent(jLabel27)
+                                                                .addGap(0, 0, Short.MAX_VALUE))
+                                                        .addGroup(jPanel9Layout.createSequentialGroup()
+                                                                .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE))))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addComponent(btnMentes, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(btnMegse, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap())
         );
 
-        jPanel9Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton8});
+        jPanel9Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[]{btnMegse, btnMentes});
 
         jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addComponent(jLabel27)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel28))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel29))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel30))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel31)
-                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(jLabel27)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel28))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txtBankAcc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel29))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txtTaxId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel30))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel31)
+                                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(btnMentes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnMegse, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel9Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton8});
+        jPanel9Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[]{btnMegse, btnMentes});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewKiallDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewKiallDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewKiallDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewKiallDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    @Override
+    public void run() {
+        initComponents();
+    }
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                NewKiallDialog dialog = new NewKiallDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+    public void addUjKiallitoListener(ActionListener kkl) {
+        btnMentes.addActionListener(kkl);
+        btnMegse.addActionListener(kkl);
+    }
+
+    public Organisation getSortOfValidatedData() {
+        Organisation newOrg = new Organisation();
+        if (txtBankAcc.isHasText() && txtAddress.isHasText() && txtEmail.isHasText() && txtName.isHasText() && txtTaxId.isHasText()) {
+            newOrg.setBankAccount(txtBankAcc.getText());
+            newOrg.setEmail(txtEmail.getText());
+            newOrg.setName(txtName.getText());
+            newOrg.setPhoneNumber(txtPhone.getText());
+            newOrg.setTaxId(txtTaxId.getText());
+            return newOrg;
+        } else return null;
+    }
+
+    public void showInfoDialog(String message) {
+        mainInfoDialog.showMessageDialog(null, message, "Invoice", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void disposeKiallDialog() {
+        dispose();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton8;
+    private javax.swing.JButton btnMegse;
+    private javax.swing.JButton btnMentes;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
@@ -258,11 +253,12 @@ public class NewKiallDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField20;
-    private javax.swing.JTextField jTextField28;
-    private javax.swing.JTextField jTextField8;
+    private MyTextField txtPhone;
+    private MyTextField txtTaxId;
+    private MyTextField txtEmail;
+    private MyTextField txtAddress;
+    private MyTextField txtName;
+    private MyTextField txtBankAcc;
     // End of variables declaration//GEN-END:variables
+    private JOptionPane mainInfoDialog;
 }

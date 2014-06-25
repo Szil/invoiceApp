@@ -5,7 +5,7 @@ import com.avaje.ebean.EbeanServerFactory;
 import com.avaje.ebean.config.DataSourceConfig;
 import com.avaje.ebean.config.ServerConfig;
 import com.avaje.ebean.config.dbplatform.MySqlPlatform;
-import model.user;
+import model.*;
 
 /**
  * Created by Gergo on 2014.06.22..
@@ -24,7 +24,7 @@ public class EbeanConf {
         mysqlDb.setDriver("com.mysql.jdbc.Driver");
         mysqlDb.setUsername("root");
         mysqlDb.setPassword("root");
-        mysqlDb.setUrl("jdbc:mysql://127.0.0.1:3306/newInvoice");
+        mysqlDb.setUrl("jdbc:mysql://sidhean.noip.me:3306/newInvoice");
         mysqlDb.setHeartbeatSql("select 1");
         config.setDatabasePlatform(new MySqlPlatform());
 
@@ -43,7 +43,13 @@ public class EbeanConf {
         // specify the entity classes (and listeners etc)
         // ... if these are not specified Ebean will search
         // ... the classpath looking for entity classes.
-        config.addClass(user.class);
+        config.addClass(User.class);
+        config.addClass(Organisation.class);
+        config.addClass(Invoice.class);
+        config.addClass(Partner.class);
+        config.addClass(Product.class);
+        config.addClass(Products.class);
+        config.addClass(Currency.class);
 
 
 // create the EbeanServer instance

@@ -8,6 +8,7 @@ package view;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 
 import static view.InvoiceInterface.*;
@@ -524,6 +525,14 @@ public class InvoiceMain extends JFrame implements Runnable {
 
     public void setTxtLoginInfo(String info) {
         txtLoginInfo.setText(info);
+    }
+
+    public void setLbInfoBar(String message) {
+        lbInfoBar.setText(message);
+    }
+
+    public void addNewTableModel(DefaultTableModel invList) {
+        tbSzla.setModel(invList);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

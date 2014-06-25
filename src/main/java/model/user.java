@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "i_user")
-public class user implements Serializable {
+public class User implements Serializable {
 
     @Id
     String email;
