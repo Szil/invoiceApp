@@ -9,21 +9,21 @@ import java.util.List;
  * Created by Gergo on 2014.06.11..
  */
 @Entity
-public class Invoice implements Serializable {
+public class Invoice implements Serializable, Comparable {
 
     @Id
-    private String invoiceId;
+    private Integer invoiceId;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "organisation", joinColumns = @JoinColumn(name = "orgId"))
-    private Integer issuer;
+    private Organisation issuer;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "partner", joinColumns = @JoinColumn(name = "partnerId"))
-    private Integer partner;
+    private Partner partner;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Integer currency;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Currency currency;
 
     private Date fullfilDate;
 
@@ -36,35 +36,35 @@ public class Invoice implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Products> productsList;
 
-    public String getInvoiceId() {
+    public Integer getInvoiceId() {
         return invoiceId;
     }
 
-    public void setInvoiceId(String invoiceId) {
+    public void setInvoiceId(Integer invoiceId) {
         this.invoiceId = invoiceId;
     }
 
-    public Integer getIssuer() {
+    public Organisation getIssuer() {
         return issuer;
     }
 
-    public void setIssuer(Integer issuer) {
+    public void setIssuer(Organisation issuer) {
         this.issuer = issuer;
     }
 
-    public Integer getPartner() {
+    public Partner getPartner() {
         return partner;
     }
 
-    public void setPartner(Integer partner) {
+    public void setPartner(Partner partner) {
         this.partner = partner;
     }
 
-    public Integer getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
-    public void setCurrency(Integer currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 
@@ -109,4 +109,11 @@ public class Invoice implements Serializable {
     }
 
 
+    @Override
+    public int compareTo(Object o) {
+        Invoice ci = (Invoice) o;
+        if (this.getInvoiceId() > ci.getInvoiceId()) return 1;
+        if (this.getInvoiceId() < ci.getInvoiceId()) return -1;
+        else return 0;
+    }
 }

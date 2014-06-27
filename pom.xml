@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -117,8 +117,31 @@
             <version>4.10</version>
             <scope>test</scope>
         </dependency>
-        <!-- Logger dependencies -->
+        <!-- Form dependencies -not managed dependency -->
+        <!-- maven command to install -->
+        <!-- install:install-file -DgroupId=com.jgoodies -DartifactId=jgoodies-forms -Dversion=1.8.0
+            -Dpackaging=jar -Dfile=H:\Downloads\jgoodies-forms-1.8.0\jgoodies-forms-1.8.0.jar -->
+        <dependency>
+            <groupId>com.jgoodies</groupId>
+            <artifactId>jgoodies-forms</artifactId>
+            <version>1.8.0</version>
+        </dependency>
+        <!-- Form dependencies -not managed dependency -->
+        <!-- maven command to install -->
+        <!-- install:install-file -DgroupId=com.jgoodies -DartifactId=jgoodies-common -Dversion=1.8.0
+            -Dpackaging=jar -Dfile=H:\Downloads\jgoodies-common-1.8.0\jgoodies-common-1.8.0.jar -->
+        <dependency>
+            <groupId>com.jgoodies</groupId>
+            <artifactId>jgoodies-common</artifactId>
+            <version>1.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>1.8.6</version>
+        </dependency>
 
     </dependencies>
+
 
 </project>

@@ -20,6 +20,25 @@ import static view.InvoiceInterface.kijelzoMeret;
  */
 public class NewKiallDialog extends javax.swing.JDialog implements Runnable {
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnMegse;
+    private javax.swing.JButton btnMentes;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JPanel jPanel9;
+    private MyTextField txtPhone;
+    private MyTextField txtTaxId;
+    private MyTextField txtEmail;
+    private MyTextField txtAddress;
+    private MyTextField txtName;
+    private MyTextField txtBankAcc;
+    // End of variables declaration//GEN-END:variables
+    private JOptionPane mainInfoDialog;
+
     /**
      * Creates new form NewKiallDialog
      */
@@ -57,7 +76,7 @@ public class NewKiallDialog extends javax.swing.JDialog implements Runnable {
         setTitle("Invoice 1.5  -  Új kiállitó felvétele");
         setBounds((int) (((kijelzoMeret.width / 2) - 270)),
                 (int) ((kijelzoMeret.height / 2) - 200), 540, 260);
-        setIconImage(new helper().createImageIcon(defIconPath).getImage());
+        setIconImage(new Helper().createImageIcon(defIconPath).getImage());
         setMaximumSize(new java.awt.Dimension(540, 260));
         setMinimumSize(new java.awt.Dimension(540, 260));
         setPreferredSize(new java.awt.Dimension(540, 260));
@@ -242,23 +261,4 @@ public class NewKiallDialog extends javax.swing.JDialog implements Runnable {
     public void disposeKiallDialog() {
         dispose();
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnMegse;
-    private javax.swing.JButton btnMentes;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JPanel jPanel9;
-    private MyTextField txtPhone;
-    private MyTextField txtTaxId;
-    private MyTextField txtEmail;
-    private MyTextField txtAddress;
-    private MyTextField txtName;
-    private MyTextField txtBankAcc;
-    // End of variables declaration//GEN-END:variables
-    private JOptionPane mainInfoDialog;
 }

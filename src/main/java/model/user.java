@@ -3,6 +3,7 @@ package model;
 /**
  * Created by Szil on 2014.05.10..
  */
+
 import com.avaje.ebean.annotation.EnumMapping;
 
 import javax.persistence.Entity;
@@ -20,14 +21,6 @@ public class User implements Serializable {
     String name;
 
     String password;
-
-    @EnumMapping(nameValuePairs = "ADMINISZTRATOR=A,KONYVELO=K,SZAMLAZO=S")
-    protected enum szKor {
-        ADMINISZTRATOR,
-        KONYVELO,
-        SZAMLAZO,
-    }
-
     szKor u_role;
 
     public String getEmail() {
@@ -70,5 +63,12 @@ public class User implements Serializable {
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    @EnumMapping(nameValuePairs = "ADMINISZTRATOR=A,KONYVELO=K,SZAMLAZO=S")
+    protected enum szKor {
+        ADMINISZTRATOR,
+        KONYVELO,
+        SZAMLAZO,
     }
 }

@@ -27,7 +27,7 @@ public class Product implements Serializable {
     private Double tax_Percent;
 
     @ManyToOne
-    private Integer currency;
+    private Currency currency;
 
     public Integer getProdId() {
         return prodId;
@@ -77,11 +77,16 @@ public class Product implements Serializable {
         this.tax_Percent = tax_Percent;
     }
 
-    public Integer getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
-    public void setCurrency(Integer currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
+    }
+
+    @Override
+    public String toString() {
+        return prodName;
     }
 }

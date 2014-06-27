@@ -5,8 +5,10 @@ import javax.swing.*;
 /**
  * Created by Gergo on 2014.06.12..
  */
-public class helper {
-    /** Returns an ImageIcon, or null if the path was invalid. */
+public class Helper {
+    /**
+     * Returns an ImageIcon, or null if the path was invalid.
+     */
     protected ImageIcon createImageIcon(String path) {
         java.net.URL imgURL = getClass().getResource(path);
         if (imgURL != null) {

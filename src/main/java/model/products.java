@@ -1,7 +1,8 @@
 package model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 /**
@@ -10,26 +11,26 @@ import java.io.Serializable;
 @Entity
 public class Products implements Serializable {
 
-    @OneToMany
-    private Integer invoiceId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Invoice invoiceId;
 
-    private Integer prodId;
+    private Product prodId;
 
     private Integer quantity;
 
-    public Integer getInvoiceId() {
+    public Invoice getInvoiceId() {
         return invoiceId;
     }
 
-    public void setInvoiceId(Integer invoiceId) {
+    public void setInvoiceId(Invoice invoiceId) {
         this.invoiceId = invoiceId;
     }
 
-    public Integer getProdId() {
+    public Product getProdId() {
         return prodId;
     }
 
-    public void setProdId(Integer prodId) {
+    public void setProdId(Product prodId) {
         this.prodId = prodId;
     }
 
@@ -39,5 +40,13 @@ public class Products implements Serializable {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "Products{" +
+                "prodId=" + prodId +
+                ", quantity=" + quantity +
+                '}';
     }
 }

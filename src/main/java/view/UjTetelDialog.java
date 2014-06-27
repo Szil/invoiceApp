@@ -1,10 +1,12 @@
 package view;
 
+import model.Currency;
 import model.Product;
 import validation.MyTextField;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import static view.InvoiceInterface.defIconPath;
 import static view.InvoiceInterface.kijelzoMeret;
@@ -13,6 +15,25 @@ import static view.InvoiceInterface.kijelzoMeret;
  * @author Adrenalin
  */
 public class UjTetelDialog extends javax.swing.JDialog implements Runnable {
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnMegse;
+    private javax.swing.JButton btnMentes;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JPanel jPanel9;
+    private MyTextField txtTaxPercent;
+    private MyTextField txtUnitPrice;
+    private JComboBox ccbCurrency;
+    private MyTextField txtSku;
+    private MyTextField txtProdName;
+    private MyTextField txtUnitofMeasure;
+    // End of variables declaration//GEN-END:variables
+    private JOptionPane mainInfoDialog;
 
     /**
      * Creates new form NewKiallDialog
@@ -43,7 +64,7 @@ public class UjTetelDialog extends javax.swing.JDialog implements Runnable {
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        ccbCurrency = new MyTextField();
+        ccbCurrency = new JComboBox<Currency>();
         btnMentes = new javax.swing.JButton();
         btnMegse = new javax.swing.JButton();
 
@@ -51,7 +72,7 @@ public class UjTetelDialog extends javax.swing.JDialog implements Runnable {
         setTitle("Invoice 1.5  -  Új tétel felvétele");
         setBounds((int) (((kijelzoMeret.width / 2) - 270)),
                 (int) ((kijelzoMeret.height / 2) - 200), 540, 260);
-        setIconImage(new helper().createImageIcon(defIconPath).getImage());
+        setIconImage(new Helper().createImageIcon(defIconPath).getImage());
         setMaximumSize(new java.awt.Dimension(540, 260));
         setMinimumSize(new java.awt.Dimension(540, 260));
         setPreferredSize(new java.awt.Dimension(570, 260));
@@ -220,14 +241,25 @@ public class UjTetelDialog extends javax.swing.JDialog implements Runnable {
     public Product getSortOfValidatedData() {
         Product newProd = new Product();
         if (txtTaxPercent.isHasText() && txtSku.isHasText() && txtProdName.isHasText() && txtUnitPrice.isHasText()) {
+            Currency slCur = (Currency) ccbCurrency.getSelectedItem();
             newProd.setUnitOfMeasure(txtUnitofMeasure.getText());
-            newProd.setCurrency(0);
+            newProd.setCurrency(slCur);
             newProd.setProdName(txtProdName.getText());
             newProd.setTax_Percent(Double.parseDouble(txtTaxPercent.getText()) / 100);
             newProd.setUnitPrice(Double.parseDouble(txtUnitPrice.getText()));
             newProd.setSku(txtSku.getText());
             return newProd;
         } else return null;
+    }
+
+    public void fillCurrencies(List<Currency> currencies) {
+        ccbCurrency.removeAllItems();
+        if (currencies.isEmpty()) {
+            ccbCurrency.addItem("Nincs");
+        } else
+            for (Currency currency : currencies) {
+                ccbCurrency.addItem(currency);
+            }
     }
 
     public void showInfoDialog(String message) {
@@ -237,23 +269,4 @@ public class UjTetelDialog extends javax.swing.JDialog implements Runnable {
     public void disposeTetelDialog() {
         dispose();
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnMegse;
-    private javax.swing.JButton btnMentes;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JPanel jPanel9;
-    private MyTextField txtTaxPercent;
-    private MyTextField txtUnitPrice;
-    private MyTextField ccbCurrency;
-    private MyTextField txtSku;
-    private MyTextField txtProdName;
-    private MyTextField txtUnitofMeasure;
-    // End of variables declaration//GEN-END:variables
-    private JOptionPane mainInfoDialog;
 }

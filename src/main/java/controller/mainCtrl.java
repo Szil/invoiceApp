@@ -1,15 +1,17 @@
 package controller;
 
 import com.avaje.ebean.EbeanServer;
-import model.Invoice;
-import model.Organisation;
-import model.Product;
-import model.User;
+import model.*;
 import view.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by Gergo on 2014.06.22..
@@ -24,7 +26,13 @@ public class MainCtrl implements Runnable {
     protected User currentUser;
     protected Invoice currentInvoice;
     protected List<Product> currentProdList;
-    protected AddProduct addProductDialog;
+    protected List<Invoice> invoices;
+    protected List<Currency> currencyList;
+    protected List<Object> invProducts;
+    protected Products prodToAdd;
+    protected Vector<Vector<Object>> tableModel;
+
+    protected UjTetel ujTetel;
     protected UjTetelDialog ujTetelDialog;
 
     public MainCtrl(EbeanServer defServer, InvoiceMain view) {
@@ -38,6 +46,8 @@ public class MainCtrl implements Runnable {
         mWindow.showWindow();
         mWindow.addLoginListener(new LoginListener());
         mWindow.addBtnListener(new MWbtnListener());
+        currencyList = getCurrencies();
+
     }
 
     public User authUser(String uName, String uPass) {
@@ -49,13 +59,44 @@ public class MainCtrl implements Runnable {
     }
 
     public List<Invoice> getInvoiceList() {
-        List<Invoice> invoices = defServer.find(Invoice.class).findList();
+        invoices = defServer.find(Invoice.class).findList();
         return invoices;
     }
 
+    public Integer getNewInvoiceID() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMM");
+        Date date = new Date();
+        Integer idbase = Integer.parseInt(dateFormat.format(date));
+        Integer offset = 10000;
+        Integer posID = offset * idbase + 1;
+        List<Invoice> invoiceList = defServer.find(Invoice.class).findList();
+        List<Invoice> query = defServer.filter(Invoice.class).sort("invoiceId desc").ge("invoiceId", posID).maxRows(3).filter(invoiceList);
+        if (query.isEmpty()) {
+            return posID;
+        } else {
+            Invoice lastInv = Collections.max(invoiceList);
+            if (posID - lastInv.getInvoiceId() <= 0) return lastInv.getInvoiceId() + 1;
+            else {
+                return posID;
+            }
+        }
+    }
+
+
     public List<Product> getProductList() {
-        List<Product> productList = defServer.find(Product.class).findList();
-        return productList;
+        return defServer.find(Product.class).findList();
+    }
+
+    public List<Currency> getCurrencies() {
+        return defServer.find(Currency.class).findList();
+    }
+
+    public List<Organisation> getOrganisations() {
+        return defServer.find(Organisation.class).findList();
+    }
+
+    public List<Partner> getPartners() {
+        return defServer.find(Partner.class).findList();
     }
 
     // View listeners
@@ -82,6 +123,10 @@ public class MainCtrl implements Runnable {
                 case "btnUjSzla":
                     szamlaDialog = new SzamlaKeszitesDialog(mWindow, mWindow.isRootCheckingEnabled());
                     szamlaDialog.addSzamlazasListener(new SzamlaKeszitoListener());
+                    szamlaDialog.fillCurrencies(currencyList);
+                    szamlaDialog.fillCBKiallito(getOrganisations());
+                    szamlaDialog.fillCBPartner(getPartners());
+                    szamlaDialog.setTxtSzlaSzam(String.valueOf(getNewInvoiceID()));
                     szamlaDialog.setVisible(true);
                     break;
                 case "btnFrissit":
@@ -135,7 +180,7 @@ public class MainCtrl implements Runnable {
         }
     }
 
-    class ProductListener implements ActionListener {
+    /*class ProductListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             String source = e.getActionCommand();
@@ -147,14 +192,14 @@ public class MainCtrl implements Runnable {
                     ujTetelDialog.setVisible(true);
                     break;
                 case "ccbTermekek":
-
+                    System.out.println(ujTetel.getUjTetel());
                     break;
                 case "buttonOK":
 
                     break;
             }
         }
-    }
+    }*/
 
     class UjTetelListener implements ActionListener {
         Product product;
@@ -175,7 +220,7 @@ public class MainCtrl implements Runnable {
                         currentProdList.add(product);
                         mWindow.setLbInfoBar("Új terméket hozzáadva, " + product.getProdName());
                         ujTetelDialog.disposeTetelDialog();
-                        addProductDialog.fillTermekBox(currentProdList);
+                        ujTetel.fillTermekBox(currentProdList);
                     }
                     break;
                 case "btnMegse":
@@ -189,14 +234,56 @@ public class MainCtrl implements Runnable {
         @Override
         public void actionPerformed(ActionEvent e) {
             String source = e.getActionCommand();
-            System.out.println(source);
+
             switch (source) {
                 case "btnUjTetel":
-                    addProductDialog = new AddProduct(mWindow);
-                    addProductDialog.addProductListener(new ProductListener());
+                    ujTetel = new UjTetel(szamlaDialog);
+                    ujTetel.addUjTetelListener(new NewProdListener());
                     currentProdList = getProductList();
-                    addProductDialog.fillTermekBox(currentProdList);
-                    addProductDialog.showDialog(null);
+                    ujTetel.fillTermekBox(currentProdList);
+                    ujTetel.showUjTetel();
+                    break;
+            }
+        }
+    }
+
+    class NewProdListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String source = e.getActionCommand();
+
+            switch (source) {
+                case "btnAddTermek":
+                    ujTetelDialog = new UjTetelDialog(mWindow, true);
+                    ujTetelDialog.addUjTetelListener(new UjTetelListener());
+                    ujTetelDialog.fillCurrencies(currencyList);
+                    ujTetelDialog.setVisible(true);
+                    break;
+                case "ccbTermekek":
+
+                    break;
+                case "btnOK":
+                    Vector<Object> lcPr = new Vector<>();
+                    prodToAdd = ujTetel.getUjTetel();
+                    Formatter prettyString = new Formatter();
+                    Product prod = prodToAdd.getProdId();
+                    double netto = prod.getUnitPrice() * prodToAdd.getQuantity();
+                    lcPr.add(prod.getSku());
+                    lcPr.add(prod.getProdName());
+                    lcPr.add(String.valueOf(prodToAdd.getQuantity()) + prod.getUnitOfMeasure());
+                    lcPr.add(prettyString.prettyPrintDouble(prod.getUnitPrice()));
+                    lcPr.add(prettyString.prettyPrintDouble(netto));
+                    lcPr.add(prettyString.prettyPrintDouble("##%", prod.getTax_Percent()));
+                    lcPr.add(prettyString.prettyPrintDouble(netto * prod.getTax_Percent()));
+                    lcPr.add(prettyString.prettyPrintDouble(netto * (prod.getTax_Percent() + 1)));
+                    //tableModel.add(lcPr);
+
+                    //invProducts.add(prodToAdd);
+                    szamlaDialog.addTetelToTable(lcPr);
+                    ujTetel.disposeUjTetel();
+                    break;
+                case "btnCancel":
+                    ujTetel.disposeUjTetel();
                     break;
             }
         }
