@@ -19,6 +19,8 @@ public class Organisation implements Serializable {
 
     private String bankAccount;
 
+    private String address;
+
     private String taxId;
 
     private String phoneNumber;
@@ -49,6 +51,14 @@ public class Organisation implements Serializable {
         this.bankAccount = bankAccount;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getTaxId() {
         return taxId;
     }
@@ -71,5 +81,10 @@ public class Organisation implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

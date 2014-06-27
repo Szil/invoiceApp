@@ -3,13 +3,11 @@ package view;
 import model.Currency;
 import model.Organisation;
 import model.Partner;
-import model.Products;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.util.List;
-import java.util.Vector;
 
 /*
  * @author Adam
@@ -353,6 +351,7 @@ public class SzamlaKeszitesDialog extends JDialog implements InvoiceInterface, R
         ccbPartner.setBackground(new java.awt.Color(204, 255, 204));
         ccbPartner.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         ccbPartner.setForeground(new java.awt.Color(0, 0, 204));
+        ccbPartner.setActionCommand("ccbPartner");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -463,6 +462,7 @@ public class SzamlaKeszitesDialog extends JDialog implements InvoiceInterface, R
         ccbKiallito.setBackground(new java.awt.Color(204, 255, 204));
         ccbKiallito.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         ccbKiallito.setForeground(new java.awt.Color(0, 0, 204));
+        ccbKiallito.setActionCommand("ccbOrg");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -755,6 +755,7 @@ public class SzamlaKeszitesDialog extends JDialog implements InvoiceInterface, R
         btnPrint.addActionListener(szrl);
         btnPrintView.addActionListener(szrl);
         btnTorles.addActionListener(szrl);
+        ccbKiallito.addActionListener(szrl);
     }
 
     public void fillCurrencies(List<Currency> currencies) {
@@ -768,27 +769,62 @@ public class SzamlaKeszitesDialog extends JDialog implements InvoiceInterface, R
     }
 
     public void fillOrgData(Organisation org) {
-        txtOrgName.setText(org.getName());
-        txtOrgAddress.setText(org.getAddress());
+        if (org.getClass().getSuperclass() == Organisation.class) {
+            txtOrgName.setText(org.getName());
+            txtOrgAddress.setText(org.getAddress());
+            txtOrgAccount.setText(org.getBankAccount());
+            txtOrgTaxNum.setText(org.getTaxId());
+            txtOrgPhone.setText(org.getPhoneNumber());
+            txtOrgEmail.setText(org.getEmail());
+        } else {
+
+        }
     }
 
-    public void addTetelToTable(Vector qnt) {
-        //DefaultTableModel mdl = (DefaultTableModel) tblTetelek.getModel();
+    public void fillPartnerData(Partner p) {
+        if (p.getClass().getSuperclass() == Partner.class) {
+            txtPartnerName.setText(p.getName());
+            txtPartnerAddress.setText(p.getAddress());
+            txtPartnerAccount.setText(p.getBankAccount());
+            txtPartnerTaxNum.setText(p.getTaxId());
+            txtPartnerPhone.setText(p.getPhoneNumber());
+            txtPartnerEmail.setText(p.getEmail());
+        } else {
 
-        tetelModel.addRow(qnt);
-        //mdl.addRow(qnt);
-        //System.out.println(mdl.getDataVector());
-        tblTetelek.setModel(tetelModel);
+        }
     }
 
-    public void fillTetelTable(List<Products> productsList) {
+    public Organisation getSelectedOrg() {
+        Organisation r = (Organisation) ccbKiallito.getSelectedItem();
+        return r;
+    }
 
+    public Partner getSelectedPartner() {
+        Partner p = (Partner) ccbPartner.getSelectedItem();
+        return p;
+    }
+
+    public Currency getSelectedCurrency() {
+        Currency c = (Currency) ccbPenzemek.getSelectedItem();
+        return c;
+    }
+
+    public void addTetelToTable(List qnt) {
+        tetelModel.addRow(qnt.toArray());
+    }
+
+    public void setTetelTable(DefaultTableModel dfmdl) {
+        tblTetelek.setModel(dfmdl);
+    }
+
+    public void setTblOssz(DefaultTableModel dfmdl) {
+        tblOssz.setModel(dfmdl);
     }
 
     public void fillCBPartner(List<Partner> partners) {
         ccbPartner.removeAllItems();
         if (partners.isEmpty()) {
-            ccbPartner.addItem("Még nincs");
+            ccbPartner.addItem("Még nincs - kiállitott számla után lesz");
         } else
             for (Partner prt : partners) {
                 ccbPartner.addItem(prt);

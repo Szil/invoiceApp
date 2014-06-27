@@ -1,21 +1,31 @@
 invoiceApp
 ==========
 
-Last build: 2.4.1 
+Build: _1.4.3_
 - ujkiallito hozzaadasa megy
 - ujtermekhozzaadas megy
 
-TODO: 
 
-- szamladialog event listener
-  -> szamlatetelek listazas,
-      Penznem valasztas
-      ---- api json get exchange rate ----
-     ObjectMapper 
-     Ujtetelhozzaadasa menny szerint
-     --- Products ---
-    
+-- Deadline -- Build: _1.4.4_
 
+    - CurrencyConverter : kész
+    - Formatter (Számok formázására) : kész
+    - Tétel hozzáadása(Products-ból) : kész
+    - Kiállitó hozzáadása : Javitva - kész
 
+TODO: TableModel generálása Products-ból és Invoice-ból(pl Sztorno számlához)
+      Invoice mentése adatbázisba
+      TableModel készitése főablakra
+      Nyomtatás - PDF mentés
+      Mezők validálása
+      Apróságok
 
-!validation
+Nem tudtam befejezni.
+
+--- Megjegyzések ---
+
+Hard-Coded Mysql connection -> saját gépemen futó mysql szerverhez
+A CurrencyConverter Google API-t használ. Bármilyen pénznembe konvertál. (!nem ellenőrzi, hogy létezik-e a pénznem)
+
+__GitHub__
+https://github.com/Szil/invoiceApp

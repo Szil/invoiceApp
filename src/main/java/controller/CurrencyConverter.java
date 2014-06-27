@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Created by Gergo on 2014.06.27..
  */
-public class CurrencyConverter {
+class CurrencyConverter {
 
     Currency from;
     Currency to;

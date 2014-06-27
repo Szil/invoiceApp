@@ -108,6 +108,12 @@ public class Invoice implements Serializable, Comparable {
         this.productsList = productsList;
     }
 
+    public Invoice() {
+    }
+
+    public Invoice(Integer invoiceId) {
+        this.invoiceId = invoiceId;
+    }
 
     @Override
     public int compareTo(Object o) {

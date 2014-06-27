@@ -19,6 +19,8 @@ public class Partner implements Serializable {
 
     private String bankAccount;
 
+    private String address;
+
     private String taxId;
 
     private String phoneNumber;
@@ -47,6 +49,14 @@ public class Partner implements Serializable {
 
     public void setBankAccount(String bankAccount) {
         this.bankAccount = bankAccount;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getTaxId() {

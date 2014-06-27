@@ -248,6 +248,7 @@ public class NewKiallDialog extends javax.swing.JDialog implements Runnable {
             newOrg.setBankAccount(txtBankAcc.getText());
             newOrg.setEmail(txtEmail.getText());
             newOrg.setName(txtName.getText());
+            newOrg.setAddress(txtAddress.getText());
             newOrg.setPhoneNumber(txtPhone.getText());
             newOrg.setTaxId(txtTaxId.getText());
             return newOrg;
