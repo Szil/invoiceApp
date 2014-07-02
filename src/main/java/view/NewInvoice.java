@@ -5,6 +5,7 @@ import model.Organisation;
 import model.Partner;
 
 import javax.swing.*;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -12,9 +13,9 @@ import java.util.List;
 /*
  * @author Adam
  */
-public class SzamlaKeszitesDialog extends JDialog implements InvoiceInterface, Runnable {
+public class NewInvoice extends JDialog implements InvoiceInterface, Runnable {
 
-    public SzamlaKeszitesDialog(java.awt.Frame parent, boolean modal) {
+    public NewInvoice(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         run();
     }
@@ -41,7 +42,7 @@ public class SzamlaKeszitesDialog extends JDialog implements InvoiceInterface, R
         jLabel16 = new javax.swing.JLabel();
         txtNumOfCopy = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        ccbPenzemek = new JComboBox<Currency>();
+        ccbPenznemek = new JComboBox<Currency>();
         txtFullfilDate = new javax.swing.JTextField();
         txtDueDate = new javax.swing.JTextField();
         txtIssueDate = new javax.swing.JTextField();
@@ -232,16 +233,12 @@ public class SzamlaKeszitesDialog extends JDialog implements InvoiceInterface, R
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel17.setText("Sorszám:");
 
-        ccbPenzemek.setBackground(new java.awt.Color(204, 255, 204));
-        ccbPenzemek.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        ccbPenzemek.setForeground(new java.awt.Color(0, 0, 204));
-        //ccbPenzemek.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Pénznem", "HUF", "EUR", "USD"}));
-        ccbPenzemek.setPreferredSize(new java.awt.Dimension(80, 21));
-        ccbPenzemek.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
-            }
-        });
+        ccbPenznemek.setBackground(new java.awt.Color(204, 255, 204));
+        ccbPenznemek.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        ccbPenznemek.setForeground(new java.awt.Color(0, 0, 204));
+        //ccbPenznemek.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Pénznem", "HUF", "EUR", "USD"}));
+        ccbPenznemek.setPreferredSize(new java.awt.Dimension(80, 21));
+        ccbPenznemek.setActionCommand("ccbPenznemek");
 
         txtFullfilDate.setBackground(new java.awt.Color(204, 255, 255));
         txtFullfilDate.setPreferredSize(new java.awt.Dimension(73, 20));
@@ -262,7 +259,7 @@ public class SzamlaKeszitesDialog extends JDialog implements InvoiceInterface, R
                         .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(ccbFiztesiMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ccbPenzemek, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ccbPenznemek, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel13)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -300,7 +297,7 @@ public class SzamlaKeszitesDialog extends JDialog implements InvoiceInterface, R
                                         .addComponent(txtFullfilDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(txtDueDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(txtIssueDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(ccbPenzemek, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(ccbPenznemek, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(txtSorszam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -598,6 +595,7 @@ public class SzamlaKeszitesDialog extends JDialog implements InvoiceInterface, R
         txtOsszesen.setEditable(false);
         txtOsszesen.setBackground(new java.awt.Color(204, 255, 51));
         txtOsszesen.setPreferredSize(new java.awt.Dimension(264, 20));
+        txtOsszesen.setHorizontalAlignment(JTextField.RIGHT);
 
         tblTetelek.setBackground(new java.awt.Color(204, 255, 255));
         tblTetelek.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -745,7 +743,7 @@ public class SzamlaKeszitesDialog extends JDialog implements InvoiceInterface, R
     @Override
     public void run() {
         initComponents();
-
+        txtDueDate.setToolTipText("Show this nerd");
     }
 
     public void addSzamlazasListener(ActionListener szrl) {
@@ -756,19 +754,28 @@ public class SzamlaKeszitesDialog extends JDialog implements InvoiceInterface, R
         btnPrintView.addActionListener(szrl);
         btnTorles.addActionListener(szrl);
         ccbKiallito.addActionListener(szrl);
+        ccbPartner.addActionListener(szrl);
+        ccbPenznemek.addActionListener(szrl);
+    }
+
+    public void addTableListener(TableModelListener tml) {
+        tetelModel.addTableModelListener(tml);
     }
 
     public void fillCurrencies(List<Currency> currencies) {
-        ccbPenzemek.removeAllItems();
+        ccbPenznemek.removeAllItems();
         if (currencies.isEmpty()) {
-            ccbPenzemek.addItem("Nincs");
+            ccbPenznemek.addItem("Nincs");
         } else
             for (Currency currency : currencies) {
-                ccbPenzemek.addItem(currency);
+                ccbPenznemek.addItem(currency);
             }
     }
 
     public void fillOrgData(Organisation org) {
+        if (org == null) {
+            return;
+        }
         if (org.getClass().getSuperclass() == Organisation.class) {
             txtOrgName.setText(org.getName());
             txtOrgAddress.setText(org.getAddress());
@@ -777,11 +784,14 @@ public class SzamlaKeszitesDialog extends JDialog implements InvoiceInterface, R
             txtOrgPhone.setText(org.getPhoneNumber());
             txtOrgEmail.setText(org.getEmail());
         } else {
-
+            return;
         }
     }
 
     public void fillPartnerData(Partner p) {
+        if (p == null) {
+            return;
+        }
         if (p.getClass().getSuperclass() == Partner.class) {
             txtPartnerName.setText(p.getName());
             txtPartnerAddress.setText(p.getAddress());
@@ -790,22 +800,22 @@ public class SzamlaKeszitesDialog extends JDialog implements InvoiceInterface, R
             txtPartnerPhone.setText(p.getPhoneNumber());
             txtPartnerEmail.setText(p.getEmail());
         } else {
-
+            return;
         }
     }
 
     public Organisation getSelectedOrg() {
-        Organisation r = (Organisation) ccbKiallito.getSelectedItem();
-        return r;
+        return ccbKiallito.getSelectedItem().getClass().getSuperclass() == Organisation.class ?
+                (Organisation) ccbKiallito.getSelectedItem() : null;
     }
 
     public Partner getSelectedPartner() {
-        Partner p = (Partner) ccbPartner.getSelectedItem();
-        return p;
+        return ccbPartner.getSelectedItem().getClass().getSuperclass() == Partner.class ?
+                (Partner) ccbPartner.getSelectedItem() : null;
     }
 
     public Currency getSelectedCurrency() {
-        Currency c = (Currency) ccbPenzemek.getSelectedItem();
+        Currency c = (Currency) ccbPenznemek.getSelectedItem();
         return c;
     }
 
@@ -845,6 +855,10 @@ public class SzamlaKeszitesDialog extends JDialog implements InvoiceInterface, R
             }
     }
 
+    public void setTxtOsszesen(String txt) {
+        txtOsszesen.setText(txt);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPrintView;
@@ -854,7 +868,7 @@ public class SzamlaKeszitesDialog extends JDialog implements InvoiceInterface, R
     private javax.swing.JButton btnMentes;
     private javax.swing.JButton btnPrint;
     private javax.swing.JComboBox ccbFiztesiMod;
-    private javax.swing.JComboBox ccbPenzemek;
+    private javax.swing.JComboBox ccbPenznemek;
     private JLabel txtSzlaSzam;
     private javax.swing.JComboBox ccbKiallito;
     private javax.swing.JComboBox ccbPartner;

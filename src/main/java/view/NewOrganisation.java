@@ -1,12 +1,16 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package view;
 
-import model.Currency;
-import model.Product;
+import model.Organisation;
 import validation.MyTextField;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import static view.InvoiceInterface.defIconPath;
 import static view.InvoiceInterface.kijelzoMeret;
@@ -14,7 +18,7 @@ import static view.InvoiceInterface.kijelzoMeret;
 /**
  * @author Adrenalin
  */
-public class UjTetelDialog extends javax.swing.JDialog implements Runnable {
+public class NewOrganisation extends javax.swing.JDialog implements Runnable {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMegse;
@@ -26,19 +30,19 @@ public class UjTetelDialog extends javax.swing.JDialog implements Runnable {
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JPanel jPanel9;
-    private MyTextField txtTaxPercent;
-    private MyTextField txtUnitPrice;
-    private JComboBox ccbCurrency;
-    private MyTextField txtSku;
-    private MyTextField txtProdName;
-    private MyTextField txtUnitofMeasure;
+    private MyTextField txtPhone;
+    private MyTextField txtTaxId;
+    private MyTextField txtEmail;
+    private MyTextField txtAddress;
+    private MyTextField txtName;
+    private MyTextField txtBankAcc;
     // End of variables declaration//GEN-END:variables
     private JOptionPane mainInfoDialog;
 
     /**
      * Creates new form NewKiallDialog
      */
-    public UjTetelDialog(java.awt.Frame parent, boolean modal) {
+    public NewOrganisation(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         run();
     }
@@ -53,69 +57,69 @@ public class UjTetelDialog extends javax.swing.JDialog implements Runnable {
     private void initComponents() {
 
         jPanel9 = new javax.swing.JPanel();
-        txtTaxPercent = new MyTextField();
-        txtUnitPrice = new MyTextField();
-        txtUnitofMeasure = new MyTextField();
-        txtSku = new MyTextField();
-        txtProdName = new MyTextField();
+        txtPhone = new MyTextField();
+        txtTaxId = new MyTextField();
+        txtBankAcc = new MyTextField();
+        txtAddress = new MyTextField();
+        txtName = new MyTextField();
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        ccbCurrency = new JComboBox<Currency>();
+        txtEmail = new MyTextField();
         btnMentes = new javax.swing.JButton();
         btnMegse = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Invoice 1.5  -  Új tétel felvétele");
+        setTitle("Invoice 1.5  -  Új kiállitó felvétele");
         setBounds((int) (((kijelzoMeret.width / 2) - 270)),
                 (int) ((kijelzoMeret.height / 2) - 200), 540, 260);
         setIconImage(new Helper().createImageIcon(defIconPath).getImage());
         setMaximumSize(new java.awt.Dimension(540, 260));
         setMinimumSize(new java.awt.Dimension(540, 260));
-        setPreferredSize(new java.awt.Dimension(570, 260));
+        setPreferredSize(new java.awt.Dimension(540, 260));
         setResizable(false);
 
         jPanel9.setBackground(new java.awt.Color(204, 204, 204));
         jPanel9.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        txtTaxPercent.setBackground(new java.awt.Color(204, 255, 255));
-        txtTaxPercent.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtPhone.setBackground(new java.awt.Color(204, 255, 255));
+        txtPhone.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        txtUnitPrice.setBackground(new java.awt.Color(204, 255, 255));
-        txtUnitPrice.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtTaxId.setBackground(new java.awt.Color(204, 255, 255));
+        txtTaxId.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        txtUnitofMeasure.setBackground(new java.awt.Color(204, 255, 255));
-        txtUnitofMeasure.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtBankAcc.setBackground(new java.awt.Color(204, 255, 255));
+        txtBankAcc.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        txtSku.setBackground(new java.awt.Color(204, 255, 255));
-        txtSku.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtAddress.setBackground(new java.awt.Color(204, 255, 255));
+        txtAddress.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        txtProdName.setBackground(new java.awt.Color(204, 255, 255));
-        txtProdName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtName.setBackground(new java.awt.Color(204, 255, 255));
+        txtName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jLabel27.setText("Termék:");
+        jLabel27.setText("Eladó");
 
         jLabel28.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel28.setText("Cikkszám:");
+        jLabel28.setText("Cím:");
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel29.setText("Mennyiségi egység:");
+        jLabel29.setText("Számlaszám:");
 
         jLabel30.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel30.setText("Egységár:");
+        jLabel30.setText("Adószám:");
 
         jLabel31.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel31.setText("Áfakulcs, Pénznem:");
+        jLabel31.setText("Telefon, E-mail:");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel3.setText("Megnevezés:");
+        jLabel3.setText("Név:");
 
-        ccbCurrency.setBackground(new java.awt.Color(204, 255, 255));
-        ccbCurrency.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtEmail.setBackground(new java.awt.Color(204, 255, 255));
+        txtEmail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         btnMentes.setBackground(new java.awt.Color(204, 255, 204));
         btnMentes.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -153,17 +157,17 @@ public class UjTetelDialog extends javax.swing.JDialog implements Runnable {
                                                         .addComponent(jLabel3))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(txtProdName)
-                                                        .addComponent(txtSku)
-                                                        .addComponent(txtUnitofMeasure)
-                                                        .addComponent(txtUnitPrice)
+                                                        .addComponent(txtName)
+                                                        .addComponent(txtAddress)
+                                                        .addComponent(txtBankAcc)
+                                                        .addComponent(txtTaxId)
                                                         .addGroup(jPanel9Layout.createSequentialGroup()
                                                                 .addComponent(jLabel27)
                                                                 .addGap(0, 0, Short.MAX_VALUE))
                                                         .addGroup(jPanel9Layout.createSequentialGroup()
-                                                                .addComponent(txtTaxPercent, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(ccbCurrency, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE))))
+                                                                .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE))))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                                                 .addGap(0, 0, Short.MAX_VALUE)
                                                 .addComponent(btnMentes, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -180,25 +184,25 @@ public class UjTetelDialog extends javax.swing.JDialog implements Runnable {
                                 .addComponent(jLabel27)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(txtProdName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel3))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(txtSku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel28))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(txtUnitofMeasure, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtBankAcc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel29))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(txtUnitPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtTaxId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel30))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(txtTaxPercent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel31)
-                                        .addComponent(ccbCurrency, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(btnMentes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -233,40 +237,29 @@ public class UjTetelDialog extends javax.swing.JDialog implements Runnable {
         initComponents();
     }
 
-    public void addUjTetelListener(ActionListener kkl) {
+    public void addUjKiallitoListener(ActionListener kkl) {
         btnMentes.addActionListener(kkl);
         btnMegse.addActionListener(kkl);
     }
 
-    public Product getSortOfValidatedData() {
-        Product newProd = new Product();
-        if (txtTaxPercent.isHasText() && txtSku.isHasText() && txtProdName.isHasText() && txtUnitPrice.isHasText()) {
-            Currency slCur = (Currency) ccbCurrency.getSelectedItem();
-            newProd.setUnitOfMeasure(txtUnitofMeasure.getText());
-            newProd.setCurrency(slCur);
-            newProd.setProdName(txtProdName.getText());
-            newProd.setTax_Percent(Double.parseDouble(txtTaxPercent.getText()) / 100);
-            newProd.setUnitPrice(Double.parseDouble(txtUnitPrice.getText()));
-            newProd.setSku(txtSku.getText());
-            return newProd;
+    public Organisation getSortOfValidatedData() {
+        Organisation newOrg = new Organisation();
+        if (txtBankAcc.isHasText() && txtAddress.isHasText() && txtEmail.isHasText() && txtName.isHasText() && txtTaxId.isHasText()) {
+            newOrg.setBankAccount(txtBankAcc.getText());
+            newOrg.setEmail(txtEmail.getText());
+            newOrg.setName(txtName.getText());
+            newOrg.setAddress(txtAddress.getText());
+            newOrg.setPhoneNumber(txtPhone.getText());
+            newOrg.setTaxId(txtTaxId.getText());
+            return newOrg;
         } else return null;
-    }
-
-    public void fillCurrencies(List<Currency> currencies) {
-        ccbCurrency.removeAllItems();
-        if (currencies.isEmpty()) {
-            ccbCurrency.addItem("Nincs");
-        } else
-            for (Currency currency : currencies) {
-                ccbCurrency.addItem(currency);
-            }
     }
 
     public void showInfoDialog(String message) {
         mainInfoDialog.showMessageDialog(null, message, "Invoice", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void disposeTetelDialog() {
+    public void disposeKiallDialog() {
         dispose();
     }
 }

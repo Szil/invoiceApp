@@ -36,6 +36,8 @@ public class Invoice implements Serializable, Comparable {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Products> productsList;
 
+    private Integer grossTotal;
+
     public Integer getInvoiceId() {
         return invoiceId;
     }
@@ -106,6 +108,14 @@ public class Invoice implements Serializable, Comparable {
 
     public void setProductsList(List<Products> productsList) {
         this.productsList = productsList;
+    }
+
+    public Integer getGrossTotal() {
+        return grossTotal;
+    }
+
+    public void setGrossTotal(Integer grossTotal) {
+        this.grossTotal = grossTotal;
     }
 
     public Invoice() {

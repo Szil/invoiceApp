@@ -1,5 +1,6 @@
 package model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,9 +16,13 @@ public class Currency implements Serializable {
     @GeneratedValue
     private Integer currencyId;
 
-    private String currency_key;
+    @Column(unique = true)
+    private String isoCode;
 
     private String name;
+
+    @Column(unique = true)
+    private String symbol;
 
     public Integer getCurrencyId() {
         return currencyId;
@@ -27,12 +32,12 @@ public class Currency implements Serializable {
         this.currencyId = currencyId;
     }
 
-    public String getCurrency_key() {
-        return currency_key;
+    public String getIsoCode() {
+        return isoCode;
     }
 
-    public void setCurrency_key(String currency_key) {
-        this.currency_key = currency_key;
+    public void setIsoCode(String isoCode) {
+        this.isoCode = isoCode;
     }
 
     public String getName() {
@@ -41,6 +46,14 @@ public class Currency implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     @Override

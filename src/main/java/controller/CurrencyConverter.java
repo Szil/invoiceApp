@@ -1,53 +1,75 @@
 package controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Currency;
 
 import java.net.URL;
-import java.util.Map;
+import java.util.List;
 
 /**
  * Created by Gergo on 2014.06.27..
  */
-class CurrencyConverter {
-
+public class CurrencyConverter {
+    @Deprecated
     Currency from;
+    @Deprecated
     Currency to;
+
     Double conversionRate;
 
-    public CurrencyConverter(Currency from) {
-        this.from = from;
-        Currency to = new Currency();
-        to.setCurrency_key("HUF");
-        if (from.getCurrency_key() == to.getCurrency_key()) {
+
+    public CurrencyConverter() {
+    }
+
+    private JsonNode rateJson(List<Currency> currencies) {
+
+
+        return null;
+    }
+
+    public Double getCurrencyFromYahoo(Currency from, Currency to) {
+        if (from.getIsoCode().equals(to.getIsoCode())) {
             this.conversionRate = 1.0;
+            return this.conversionRate;
         } else {
-            conversionRate = getCurrencyFromGoogle(from, to);
+            try {
+                URL url = new URL("https://query.yahooapis.com/v1/public/yql?q=select%20Rate%20from%20yahoo.finance.xchange" +
+                        "%20where%20pair%20in%20(%22" + from.getIsoCode() + to.getIsoCode() + "%22)&format=json" +
+                        "&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys");
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode json = mapper.readTree(url);
+                this.conversionRate = json.findValue("Rate").asDouble();
+                return this.conversionRate;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+        //
+        return null;
     }
 
-    public CurrencyConverter(Currency from, Currency to) {
-        if (from.getCurrency_key() == to.getCurrency_key()) {
-            conversionRate = 1.0;
-        } else {
-            this.from = from;
-            this.to = to;
-            this.conversionRate = getCurrencyFromGoogle(from, to);
-        }
-    }
+    /*
+    https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22USDHUF%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=
+    https://query.yahooapis.com/v1/public/yql?q=select%20Rate%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22USDHUF%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=
+    "http://rate-exchange.appspot.com/currency?from=" + from.getIsoCode() + "&to=" + to.getIsoCode()
+    //All currency
+    https://query.yahooapis.com/v1/public/yql?q=select%20id%2C%20Rate%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22USDHUF%22,%22HUFUSD%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys
+     */
 
-    public Double getCurrencyFromGoogle(Currency from, Currency to) {
-        this.from = from;
-        this.to = to;
-        if (from.getCurrency_key() == to.getCurrency_key()) {
+    @Deprecated
+    public Double getCurrencyFromYahoo() {
+        if (from.getIsoCode().equals(to.getIsoCode())) {
             this.conversionRate = 1.0;
         } else {
             try {
-                URL url = new URL("http://rate-exchange.appspot.com/currency?from=" + from.getCurrency_key() + "&to=" + to.getCurrency_key());
+                URL url = new URL("https://query.yahooapis.com/v1/public/yql?q=select%20Rate%20from%20yahoo.finance.xchange" +
+                        "%20where%20pair%20in%20(%22" + from.getIsoCode() + to.getIsoCode() + "%22)&format=json" +
+                        "&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys");
                 ObjectMapper mapper = new ObjectMapper();
-                Map<String, Object> json = mapper.readValue(url, Map.class);
-                conversionRate = (Double) json.get("rate");
-                return conversionRate;
+                JsonNode json = mapper.readTree(url);
+                this.conversionRate = json.findValue("Rate").asDouble();
+                return this.conversionRate;
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -55,21 +77,6 @@ class CurrencyConverter {
         return null;
     }
 
-    public Currency getFrom() {
-        return from;
-    }
-
-    public void setFrom(Currency from) {
-        this.from = from;
-    }
-
-    public Currency getTo() {
-        return to;
-    }
-
-    public void setTo(Currency to) {
-        this.to = to;
-    }
 
     public Double getConversionRate() {
         return conversionRate;
@@ -78,4 +85,6 @@ class CurrencyConverter {
     public void setConversionRate(Double conversionRate) {
         this.conversionRate = conversionRate;
     }
+
+
 }

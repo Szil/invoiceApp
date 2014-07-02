@@ -17,13 +17,13 @@ import java.awt.event.ActionListener;
 /**
  * @author GergÅ Nemes
  */
-public class UjTetel extends JDialog implements Runnable {
-    public UjTetel(Frame owner) {
+public class NewProducts extends JDialog implements Runnable {
+    public NewProducts(Frame owner) {
         super(owner);
         run();
     }
 
-    public UjTetel(Dialog owner) {
+    public NewProducts(Dialog owner) {
         super(owner);
         run();
     }

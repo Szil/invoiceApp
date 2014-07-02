@@ -19,7 +19,7 @@ import static view.InvoiceInterface.*;
 /**
  * @author Adrenalin
  */
-public class InvoiceMain extends JFrame implements Runnable {
+public class MainWindow extends JFrame implements Runnable {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBejelentkez;
@@ -64,7 +64,7 @@ public class InvoiceMain extends JFrame implements Runnable {
     /**
      * Creates new form InvoiceMain
      */
-    public InvoiceMain() {
+    public MainWindow() {
         run();
     }
 

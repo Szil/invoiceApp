@@ -33,6 +33,7 @@ public class EbeanConf {
         config.setDataSourceConfig(mysqlDb);
 
         // set dll config
+        // set true to generate all table
         config.setDdlGenerate(false);
         config.setDdlRun(false);
 

@@ -1,5 +1,8 @@
 package controller;
 
+import model.Currency;
+import model.Product;
+
 import java.text.DecimalFormat;
 
 /**
@@ -26,6 +29,20 @@ public class Formatter {
 
     public String prettyPrintDouble(String format, double value) {
         DecimalFormat prettyFormat = new DecimalFormat(format);
+        String out = prettyFormat.format(value);
+        return out;
+    }
+
+    public String prettyPrintCurrency(Currency currency, double value) {
+        this.pattern = "###,###.00 " + currency.getSymbol();
+        DecimalFormat prettyFormat = new DecimalFormat(this.pattern);
+        String out = prettyFormat.format(value);
+        return out;
+    }
+
+    public String prettyPrintProductMeasure(Product product, double value) {
+        this.pattern = "## " + product.getUnitOfMeasure();
+        DecimalFormat prettyFormat = new DecimalFormat(this.pattern);
         String out = prettyFormat.format(value);
         return out;
     }

@@ -1,7 +1,10 @@
 create table currency (
   currency_id               integer auto_increment not null,
-  currency_key              varchar(255),
+  iso_code                  varchar(255),
   name                      varchar(255),
+  symbol                    varchar(255),
+  constraint uq_currency_iso_code unique (iso_code),
+  constraint uq_currency_symbol unique (symbol),
   constraint pk_currency primary key (currency_id))
 ;
 
@@ -14,6 +17,7 @@ create table invoice (
   issue_date                date,
   due_date                  date,
   number_of_copies          integer,
+  gross_total               integer,
   constraint pk_invoice primary key (invoice_id))
 ;
 
@@ -32,6 +36,7 @@ create table partner (
   partner_id                integer auto_increment not null,
   name                      varchar(255),
   bank_account              varchar(255),
+  address                   varchar(255),
   tax_id                    varchar(255),
   phone_number              varchar(255),
   email                     varchar(255),

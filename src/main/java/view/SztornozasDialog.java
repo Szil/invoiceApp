@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 /*
  * @author Adam
  */
+@Deprecated
 public class SztornozasDialog extends javax.swing.JDialog implements ActionListener, InvoiceInterface {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -97,7 +98,7 @@ public class SztornozasDialog extends javax.swing.JDialog implements ActionListe
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                SzamlaKeszitesDialog dialog = new SzamlaKeszitesDialog(new javax.swing.JFrame(), true);
+                NewInvoice dialog = new NewInvoice(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -1147,8 +1148,8 @@ public class SztornozasDialog extends javax.swing.JDialog implements ActionListe
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        UjTetelDialog ujTetelDialog = new UjTetelDialog(mainFrame, rootPaneCheckingEnabled);
-        ujTetelDialog.setVisible(true);
+        NewProduct newProduct = new NewProduct(mainFrame, rootPaneCheckingEnabled);
+        newProduct.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
     // End of variables declaration//GEN-END:variables
 

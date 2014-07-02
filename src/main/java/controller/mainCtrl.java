@@ -4,14 +4,18 @@ import com.avaje.ebean.EbeanServer;
 import model.*;
 import view.*;
 
+import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseMotionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Created by Gergo on 2014.06.22..
@@ -19,35 +23,40 @@ import java.util.Vector;
 public class MainCtrl implements Runnable {
 
     protected EbeanServer defServer;
-    protected InvoiceMain mWindow;
-    protected SzamlaKeszitesDialog szamlaDialog;
-    protected NewKiallDialog newKiallDialog;
+    protected MainWindow mainWindow;
+    protected NewInvoice newInvoiceDialog;
+    protected NewOrganisation newOrgDialog;
     protected SztornozasDialog sztornoDialog;
     protected User currentUser;
-    protected Invoice currentInvoice;
-    protected List<Product> currentProdList;
     protected List<Invoice> invoices;
+    protected InvoiceDetails invoiceDetail;
+    protected List<Product> currentProdList;
     protected List<Currency> currencyList;
-    protected List<Object> invProducts;
     protected Products prodToAdd;
-    protected Vector<Vector<Object>> tableModel;
+    protected Invoice cInvoice;
 
-    protected UjTetel ujTetel;
-    protected UjTetelDialog ujTetelDialog;
+    protected NewProducts newProductsDialog;
+    protected NewProduct newProductDialog;
 
-    public MainCtrl(EbeanServer defServer, InvoiceMain view) {
+    Component asd;
+    MouseMotionListener mml;
+    ToolTipManager ttp;
+
+    public MainCtrl(EbeanServer defServer, MainWindow view) {
         this.defServer = defServer;
-        this.mWindow = view;
+        this.mainWindow = view;
         run();
     }
 
     @Override
     public void run() {
-        mWindow.showWindow();
-        mWindow.addLoginListener(new LoginListener());
-        mWindow.addBtnListener(new MWbtnListener());
+        mainWindow.showWindow();
+        mainWindow.addLoginListener(new LoginListener());
+        mainWindow.addBtnListener(new MainWindowListener());
         currencyList = getCurrencies();
-
+        ttp = ToolTipManager.sharedInstance();
+        ttp.setInitialDelay(0);
+        ttp.setReshowDelay(0);
     }
 
     public User authUser(String uName, String uPass) {
@@ -84,7 +93,7 @@ public class MainCtrl implements Runnable {
 
 
     public List<Product> getProductList() {
-        return defServer.find(Product.class).findList();
+        return defServer.find(Product.class).orderBy("prodName").findList();
     }
 
     public List<Currency> getCurrencies() {
@@ -104,56 +113,102 @@ public class MainCtrl implements Runnable {
     class LoginListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            currentUser = authUser(mWindow.getLoginName(), mWindow.getLoginPass());
+            currentUser = authUser(mainWindow.getLoginName(), mainWindow.getLoginPass());
             if (currentUser != null) {
-                mWindow.setTxtLoginInfo("Belépve, mint: " + currentUser.getName());
-                mWindow.applyRole(String.valueOf(currentUser.getU_role()));
+                mainWindow.setTxtLoginInfo("Belépve, mint: " + currentUser.getName());
+                mainWindow.applyRole(String.valueOf(currentUser.getU_role()));
             } else {
-                mWindow.showWarningDialog("Sikertelen belépés!");
+                mainWindow.showWarningDialog("Sikertelen belépés!");
             }
         }
     }
 
-    class MWbtnListener implements ActionListener {
+    class MainWindowListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             String source = e.getActionCommand();
 
             switch (source) {
                 case "btnUjSzla":
-                    szamlaDialog = new SzamlaKeszitesDialog(mWindow, mWindow.isRootCheckingEnabled());
-                    szamlaDialog.addSzamlazasListener(new SzamlaKeszitoListener());
-                    szamlaDialog.fillCurrencies(currencyList);
-                    szamlaDialog.fillCBKiallito(getOrganisations());
-                    szamlaDialog.fillCBPartner(getPartners());
-                    szamlaDialog.setTxtSzlaSzam(String.valueOf(getNewInvoiceID()));
-                    szamlaDialog.setVisible(true);
+                    newInvoiceDialog = new NewInvoice(mainWindow, mainWindow.isRootCheckingEnabled());
+                    newInvoiceDialog.addSzamlazasListener(new NewInvoiceListener());
+                    newInvoiceDialog.addTableListener(new InvoiceDetailsListener());
+                    newInvoiceDialog.fillCurrencies(currencyList);
+                    newInvoiceDialog.fillCBKiallito(getOrganisations());
+                    newInvoiceDialog.fillCBPartner(getPartners());
+                    Integer ujazon = getNewInvoiceID();
+                    cInvoice = new Invoice(ujazon);
+                    invoiceDetail = new InvoiceDetails();
+                    newInvoiceDialog.setTxtSzlaSzam(String.valueOf(ujazon));
+                    newInvoiceDialog.setVisible(true);
                     break;
                 case "btnFrissit":
 
                     break;
                 case "btnUjKiallito":
-                    newKiallDialog = new NewKiallDialog(mWindow, mWindow.isRootCheckingEnabled());
-                    newKiallDialog.addUjKiallitoListener(new UjKiallitoDialogListener());
-                    newKiallDialog.setVisible(true);
+                    newOrgDialog = new NewOrganisation(mainWindow, mainWindow.isRootCheckingEnabled());
+                    newOrgDialog.addUjKiallitoListener(new NewOrganisationListener());
+                    newOrgDialog.setVisible(true);
                     break;
                 case "miKilepes":
-                    mWindow.showKilepesPromt();
+                    mainWindow.showKilepesPromt();
                     break;
                 case "btnSztorno":
-                    sztornoDialog = new SztornozasDialog(mWindow, mWindow.isRootCheckingEnabled());
+                    sztornoDialog = new SztornozasDialog(mainWindow, mainWindow.isRootCheckingEnabled());
                     sztornoDialog.setVisible(true);
                     break;
                 case "miUjSzamla":
-                    szamlaDialog = new SzamlaKeszitesDialog(mWindow, mWindow.isRootCheckingEnabled());
-                    szamlaDialog.addSzamlazasListener(new SzamlaKeszitoListener());
-                    szamlaDialog.setVisible(true);
+                    newInvoiceDialog = new NewInvoice(mainWindow, mainWindow.isRootCheckingEnabled());
+                    newInvoiceDialog.addSzamlazasListener(new NewInvoiceListener());
+                    newInvoiceDialog.setVisible(true);
                     break;
             }
         }
     }
 
-    class UjKiallitoDialogListener implements ActionListener {
+    class NewInvoiceListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            final String source = e.getActionCommand();
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    switch (source) {
+                        case "btnUjTetel":
+                            newProductsDialog = new NewProducts(newInvoiceDialog);
+                            newProductsDialog.addUjTetelListener(new NewProductsListener());
+                            currentProdList = getProductList();
+                            newProductsDialog.fillTermekBox(currentProdList);
+                            newProductsDialog.showUjTetel();
+                            break;
+                        case "ccbOrg":
+                            newInvoiceDialog.fillOrgData(newInvoiceDialog.getSelectedOrg());
+                            break;
+                        case "ccbPartner":
+                            newInvoiceDialog.fillPartnerData(newInvoiceDialog.getSelectedPartner());
+                            break;
+                        case "ccbPenznemek":
+                            invoiceDetail.setInvoiceCurrency(newInvoiceDialog.getSelectedCurrency());
+                            break;
+                    }
+                }
+            });
+        }
+    }
+
+    //Tételek tábla figyelője -> változik -> új összesités
+    class InvoiceDetailsListener implements TableModelListener {
+
+        @Override
+        public void tableChanged(TableModelEvent e) {
+            invoiceDetail.addSubTotal(invoiceDetail.getCurrentProducts());
+            newInvoiceDialog.setTblOssz(invoiceDetail.getSummaryTableData());
+            newInvoiceDialog.setTxtOsszesen(String.valueOf(invoiceDetail.getPrettySubTotal()));
+
+        }
+    }
+
+    class NewOrganisationListener implements ActionListener {
         Organisation newOrganisation;
 
         @Override
@@ -162,46 +217,25 @@ public class MainCtrl implements Runnable {
 
             switch (source) {
                 case "btnMentes":
-                    newOrganisation = newKiallDialog.getSortOfValidatedData();
+                    newOrganisation = MainCtrl.this.newOrgDialog.getSortOfValidatedData();
                     if (newOrganisation == null) {
-                        newKiallDialog.showInfoDialog("Mezők kitöltése kötelező");
+                        MainCtrl.this.newOrgDialog.showInfoDialog("Mezők kitöltése kötelező");
                     } else if (defServer.find(Organisation.class).where().eq("taxId", newOrganisation.getTaxId()).findUnique() != null) {
-                        newKiallDialog.showInfoDialog("A cég már létezik!");
+                        MainCtrl.this.newOrgDialog.showInfoDialog("A cég már létezik!");
                     } else {
                         defServer.save(newOrganisation);
-                        mWindow.setLbInfoBar("Új kiállitó hozzáadva, " + newOrganisation.getName() + "!");
-                        newKiallDialog.disposeKiallDialog();
+                        mainWindow.setLbInfoBar("Új kiállitó hozzáadva, " + newOrganisation.getName() + "!");
+                        MainCtrl.this.newOrgDialog.disposeKiallDialog();
                     }
                     break;
                 case "btnMegse":
-                    newKiallDialog.disposeKiallDialog();
+                    MainCtrl.this.newOrgDialog.disposeKiallDialog();
                     break;
             }
         }
     }
 
-    /*class ProductListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String source = e.getActionCommand();
-
-            switch (source) {
-                case "btnUjTermek":
-                    ujTetelDialog = new UjTetelDialog(mWindow, true);
-                    ujTetelDialog.addUjTetelListener(new UjTetelListener());
-                    ujTetelDialog.setVisible(true);
-                    break;
-                case "ccbTermekek":
-                    System.out.println(ujTetel.getUjTetel());
-                    break;
-                case "buttonOK":
-
-                    break;
-            }
-        }
-    }*/
-
-    class UjTetelListener implements ActionListener {
+    class NewProductListener implements ActionListener {
         Product product;
 
         @Override
@@ -210,82 +244,56 @@ public class MainCtrl implements Runnable {
 
             switch (source) {
                 case "btnMentes":
-                    product = ujTetelDialog.getSortOfValidatedData();
+                    product = newProductDialog.getSortOfValidatedData();
                     if (product == null) {
-                        ujTetelDialog.showInfoDialog("Mezők kitöltése kötelező");
+                        newProductDialog.showInfoDialog("Mezők kitöltése kötelező");
                     } else if (defServer.find(Product.class).where().eq("sku", product.getSku()).findUnique() != null) {
-                        ujTetelDialog.showInfoDialog("Termék ezzel a cikkszámmal már létezik");
+                        newProductDialog.showInfoDialog("Termék ezzel a cikkszámmal már létezik");
                     } else {
                         defServer.save(product);
                         currentProdList.add(product);
-                        mWindow.setLbInfoBar("Új terméket hozzáadva, " + product.getProdName());
-                        ujTetelDialog.disposeTetelDialog();
-                        ujTetel.fillTermekBox(currentProdList);
+                        mainWindow.setLbInfoBar("Új terméket hozzáadva, " + product.getProdName());
+                        newProductDialog.disposeTetelDialog();
+                        newProductsDialog.fillTermekBox(currentProdList);
                     }
                     break;
                 case "btnMegse":
-                    ujTetelDialog.disposeTetelDialog();
+                    newProductDialog.disposeTetelDialog();
                     break;
             }
         }
     }
 
-    class SzamlaKeszitoListener implements ActionListener {
+
+    class NewProductsListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String source = e.getActionCommand();
+            final String source = e.getActionCommand();
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    switch (source) {
+                        case "btnAddTermek":
+                            newProductDialog = new NewProduct(mainWindow, true);
+                            newProductDialog.addUjTetelListener(new NewProductListener());
+                            newProductDialog.fillCurrencies(currencyList);
+                            newProductDialog.setVisible(true);
+                            break;
+                        case "ccbTermekek":
 
-            switch (source) {
-                case "btnUjTetel":
-                    ujTetel = new UjTetel(szamlaDialog);
-                    ujTetel.addUjTetelListener(new NewProdListener());
-                    currentProdList = getProductList();
-                    ujTetel.fillTermekBox(currentProdList);
-                    ujTetel.showUjTetel();
-                    break;
-            }
+                            break;
+                        case "btnOK":
+                            newInvoiceDialog.addTetelToTable(invoiceDetail.addProductToTable(newProductsDialog.getUjTetel()));
+                            newProductsDialog.disposeUjTetel();
+                            break;
+                        case "btnCancel":
+                            newProductsDialog.disposeUjTetel();
+                            break;
+                    }
+                }
+            });
+
         }
     }
 
-    class NewProdListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String source = e.getActionCommand();
-
-            switch (source) {
-                case "btnAddTermek":
-                    ujTetelDialog = new UjTetelDialog(mWindow, true);
-                    ujTetelDialog.addUjTetelListener(new UjTetelListener());
-                    ujTetelDialog.fillCurrencies(currencyList);
-                    ujTetelDialog.setVisible(true);
-                    break;
-                case "ccbTermekek":
-
-                    break;
-                case "btnOK":
-                    Vector<Object> lcPr = new Vector<>();
-                    prodToAdd = ujTetel.getUjTetel();
-                    Formatter prettyString = new Formatter();
-                    Product prod = prodToAdd.getProdId();
-                    double netto = prod.getUnitPrice() * prodToAdd.getQuantity();
-                    lcPr.add(prod.getSku());
-                    lcPr.add(prod.getProdName());
-                    lcPr.add(String.valueOf(prodToAdd.getQuantity()) + prod.getUnitOfMeasure());
-                    lcPr.add(prettyString.prettyPrintDouble(prod.getUnitPrice()));
-                    lcPr.add(prettyString.prettyPrintDouble(netto));
-                    lcPr.add(prettyString.prettyPrintDouble("##%", prod.getTax_Percent()));
-                    lcPr.add(prettyString.prettyPrintDouble(netto * prod.getTax_Percent()));
-                    lcPr.add(prettyString.prettyPrintDouble(netto * (prod.getTax_Percent() + 1)));
-                    //tableModel.add(lcPr);
-
-                    //invProducts.add(prodToAdd);
-                    szamlaDialog.addTetelToTable(lcPr);
-                    ujTetel.disposeUjTetel();
-                    break;
-                case "btnCancel":
-                    ujTetel.disposeUjTetel();
-                    break;
-            }
-        }
-    }
 }
